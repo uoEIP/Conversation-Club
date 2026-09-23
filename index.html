@@ -83,10 +83,25 @@ a{color:inherit}
 .plan-card{text-decoration:none;background:var(--bg2);border:2.5px solid var(--pc);border-radius:16px;padding:14px;
   display:flex;flex-direction:column;gap:4px;box-shadow:4px 4px 0 var(--shadow);transition:transform .1s;text-align:center;align-items:center}
 .plan-card:hover{transform:translateY(-3px)}
+.plan-card{font:inherit;cursor:pointer}
+.plan-card.active{background:var(--pc);box-shadow:6px 6px 0 var(--shadow)}
+.plan-card.active .plan-wk{color:rgba(22,10,46,.7)}
+.plan-card.active .plan-t{color:var(--ink)}
+.plan-card.active .plan-s{color:rgba(22,10,46,.72)}
 .plan-wk{font-family:var(--font-d);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--pc)}
 .plan-e{font-size:1.8rem;line-height:1}
 .plan-t{font-family:var(--font-d);font-weight:600;font-size:1.02rem;color:var(--paper);line-height:1.1}
 .plan-s{font-size:.82rem;color:#C9B4DE}
+.plan-detail{margin-top:16px;background:var(--bg2);border:2.5px solid var(--pc,rgba(251,239,255,.2));border-radius:20px;
+  padding:20px 22px;box-shadow:6px 6px 0 var(--shadow);display:none}
+.plan-detail.show{display:block;animation:pop .35s cubic-bezier(.3,1.4,.5,1)}
+.pd-top{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.pd-e{font-size:1.9rem;line-height:1}
+.pd-wk{font-family:var(--font-d);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--pc)}
+.pd-t{font-family:var(--font-d);font-weight:700;font-size:1.3rem;color:var(--paper);line-height:1.05}
+.pd-s{color:#D9C7EE;font-size:1rem;line-height:1.5}
+.pd-link{display:inline-block;margin-top:13px;font-family:var(--font-d);font-weight:600;font-size:.92rem;text-decoration:none;
+  color:var(--ink);background:var(--pc);border:2.5px solid var(--ink);border-radius:999px;padding:8px 16px;box-shadow:3px 3px 0 var(--shadow)}
 
 /* WEEK */
 .week{margin-bottom:38px;scroll-margin-top:58px}
@@ -234,9 +249,10 @@ footer{text-align:center;color:#9C86B6;font-size:.85rem;padding:20px 0 46px}
 
 <section id="plan" class="block wrap">
   <div class="sec-head"><span class="eyebrow">🗺️ The Plan</span><h2>Here's what we get up to</h2>
-    <p>Tap any week to jump to its activities.</p></div>
+    <p>Tap any week to see what it's about.</p></div>
   <div class="welcome">💛 <b>Come to as many weeks as you like — drop in any time.</b> You never have to have been here before. Every level of English is welcome: answer in one word or a whole story. And you can always say <b>“pass.”</b></div>
   <div class="plan" id="plan-grid"></div>
+  <div class="plan-detail" id="plan-detail" aria-live="polite"></div>
 </section>
 
 <section class="block wrap" style="padding-top:6px"><div id="weeks"></div></section>
@@ -381,16 +397,21 @@ const WEEKS=[
     {q:"…would survive a zombie apocalypse",dot:"var(--pink)"},{q:"…has a useless talent",dot:"var(--pink)"},{q:"…wants a weird superpower",dot:"var(--pink)"}]},
   {type:"note",icon:"💡",title:"Then…",text:"Share the most interesting thing you found out about someone. And a heads-up: Week 10 is a showcase, and performing is always optional."}]},
 
-{n:2,stage:"Explore",emoji:"🌟",color:"var(--violet)",title:"Find Your Thing",short:"Find your vibe",vibe:"Figure out your creative vibe — or don't. No teams, no pressure.",acts:[
-  {type:"pick",icon:"🌟",title:"Starter",sub:"Pick one to talk about.",options:["What do you wish you were really good at?","What is a skill you would love to have?"]},
-  {type:"checklist",icon:"🕵️",title:"Talent Hunt — find someone who…",unit:"found",items:["🎸 plays an instrument","📚 loves telling stories","🎤 has performed onstage","🗣️ can do an impression","😂 makes people laugh","✍️ enjoys writing","💃 knows a dance","🌍 knows a song/story from their culture","💡 loves coming up with ideas","🤪 has a totally useless talent"]},
-  {type:"flip",icon:"🧩",title:"The creative lanes — tap to flip",cards:[
+{n:2,stage:"Explore",emoji:"🌟",color:"var(--violet)",title:"Find Your Thing",short:"Find your vibe",vibe:"Talk to lots of new people, then explore the five creative vibes. No teams, no commitments.",acts:[
+  {type:"pick",icon:"🌟",title:"Pick your warm-up",sub:"Choose a question and answer it out loud when it's your turn.",options:["What's something you wish you were really good at?","If you could instantly master one skill, what would it be?","What's a talent you'd love to steal from someone?"]},
+  {type:"checklist",icon:"🕵️",title:"Talent Hunt: Speed Chatting",unit:"found",sub:"Two lines facing each other. Chat for a few minutes, then one line shifts along for a new partner. Each round, find someone who… — but it's a conversation, not a yes/no! (Neither of you? Then: would you want to try it? Why or why not?)",items:["🎸 plays an instrument","📚 loves telling stories","🎤 has performed onstage","🗣️ can do an impression","😂 makes people laugh","✍️ enjoys writing","💃 knows a dance","🌍 knows a song/story from their culture","💡 loves coming up with ideas","🤪 has a totally useless talent"]},
+  {type:"note",icon:"💬",title:"What did we find out?",text:"Come back together and share: Who found someone with a surprising talent? What's the most unusual thing we found? Did anyone meet someone who can do something YOU said you wanted to learn?"},
+  {type:"flip",icon:"🧩",title:"The 5 vibe corners — tap to flip",cards:[
     {cls:"lane-story",ic:"📖",name:"Storyteller",desc:"Stories, poetry, spoken word, comedy, hosting."},
     {cls:"lane-actor",ic:"🎭",name:"Actor",desc:"Characters, skits, improv, role-play."},
     {cls:"lane-perform",ic:"🎤",name:"Performer",desc:"Music, singing, dance, impressions, voice."},
     {cls:"lane-create",ic:"🎨",name:"Creator",desc:"Writing, art, directing, design, visuals, ideas."},
     {cls:"lane-vibe",ic:"💛",name:"Just here to vibe",desc:"Talk, laugh, cheer people on, be a great audience."}]},
-  {type:"note",icon:"❤️",title:"React to each lane — no commitment",text:"As you hear about each lane, show how you feel — out loud or just to yourself. React to as many as you like, or none. It's a vibe check, not a choice you're stuck with:",tags:["❤️ I'd love to try it","👀 I'd give it a go","🤷 Not sure yet","😅 Probably not me","💛 I just want to talk"]}]},
+  {type:"rounds",icon:"🚶",title:"Creative Vibe Corners",sub:"These are NOT teams! Each round, move to the corner that feels true right now — you can pick a different one every time. Then talk about it with whoever's there.",rounds:[
+    {label:"🎉 Round 1 · Most FUN",color:"var(--teal)",qs:["Which corner sounds the most fun to you?","Why did you come here?","What would you actually like to try?"]},
+    {label:"😬 Round 2 · Biggest CHALLENGE",color:"var(--tangerine)",qs:["Which is the most outside your comfort zone?","What makes it intimidating?","What would make you more willing to try it?"]},
+    {label:"👀 Round 3 · Might SURPRISE you",color:"var(--pink)",qs:["Which might surprise you if you actually tried it?","Why did you choose it?","What might you enjoy about it?"]}]},
+  {type:"note",icon:"🌟",title:"Wrap-up",text:"Did anyone end up in three different places? Did anyone choose somewhere they didn't expect? That's exactly the point — you don't need to know your thing yet. Next week, we start with 📖 storytelling."}]},
 
 {n:3,stage:"Sample",emoji:"📖",color:"var(--teal)",title:"Tell It",short:"Tell a story",vibe:"Turn real life into a story worth hearing. No speeches.",acts:[
   {type:"pick",icon:"📖",title:"Starter",sub:"Pick one to talk about.",options:["What is something funny or interesting that happened to you recently?","What is a story your friends love you to tell?"]},
@@ -441,8 +462,31 @@ const WEEKS=[
   {type:"reveal",icon:"🏁",title:"Finale — go around the room",btn:"🎉 Ask the room",lead:"Tap to celebrate 👇",confetti:true,pool:["What was your favourite Conversation Club memory?","What surprised you this term?","What performance did you love?","Did you do something you didn't think you'd do?","What's one thing you'll miss?"]}]},
 ];
 
-const weeksBox=document.getElementById('weeks'),navInner=document.getElementById('wknav-inner'),planGrid=document.getElementById('plan-grid');
-WEEKS.forEach(w=>{
+/* short summaries shown when a plan card is tapped */
+const SUMMARIES={
+ 1:"Meet the room through easy question rounds and a “Find Someone Who” hunt. Pure mingling — nothing to prepare, no pressure.",
+ 2:"Talk to lots of people with speed-chatting, then explore five creative “vibe corners” to see what you're drawn to. No teams.",
+ 3:"Storytelling with no speeches. Spin a prompt and turn a real-life moment into a story your group actually wants to hear.",
+ 4:"Playful, low-stakes improv. Try quick scenes with a partner, then spin up a wild character, place and problem to act out.",
+ 5:"Performing is more than singing. Dramatic readings, silly dares and mini-performances stretch what “performing” can mean.",
+ 6:"Make something together in 25 minutes from three random ingredients — a skit, a story, an art piece, anything you like.",
+ 7:"Pick a format you're drawn to and start building a short piece that's actually yours — solo, in a pair, or in a group.",
+ 8:"Share your piece, swap kind and specific feedback, then take the best ideas and make it better.",
+ 9:"A relaxed run-through. Polish your piece and decide together how the whole showcase will flow.",
+ 10:"Showtime — a mix of everything the club made. Perform, or be the audience and hype crew. Then celebrate together.",
+};
+const weeksBox=document.getElementById('weeks'),navInner=document.getElementById('wknav-inner'),planGrid=document.getElementById('plan-grid'),planDetail=document.getElementById('plan-detail');
+function showPlan(w,card){
+  planGrid.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('active'));
+  card.classList.add('active');
+  planDetail.style.setProperty('--pc',w.color);
+  planDetail.innerHTML=`<div class="pd-top"><span class="pd-e">${w.emoji}</span>
+      <div><div class="pd-wk">Week ${w.n} · ${w.stage}</div><div class="pd-t">${w.title}</div></div></div>
+    <p class="pd-s">${SUMMARIES[w.n]}</p>
+    <a class="pd-link" href="#week${w.n}">See this week's activities →</a>`;
+  planDetail.classList.remove('show');void planDetail.offsetWidth;planDetail.classList.add('show');
+}
+WEEKS.forEach((w,i)=>{
   const sec=$(`<section class="week" id="week${w.n}" style="--wc:${w.color}">
     <div class="week-banner"><div class="wb-badge"><span class="wb-n">WEEK ${w.n}</span><span class="wb-e">${w.emoji}</span></div>
       <div><div class="wb-stage">${w.stage}</div><h2 class="wb-title">${w.title}</h2></div><p class="wb-vibe">${w.vibe}</p></div>
@@ -451,8 +495,10 @@ WEEKS.forEach(w=>{
   w.acts.forEach(a=>box.appendChild(BUILD[a.type](a)));
   weeksBox.appendChild(sec);
   navInner.appendChild($(`<a href="#week${w.n}" style="--wc:${w.color}" title="Week ${w.n}: ${w.title}">${w.n}</a>`));
-  planGrid.appendChild($(`<a class="plan-card" href="#week${w.n}" style="--pc:${w.color}">
-    <span class="plan-wk">Week ${w.n}</span><span class="plan-e">${w.emoji}</span><span class="plan-t">${w.title}</span><span class="plan-s">${w.short}</span></a>`));
+  const card=$(`<button type="button" class="plan-card" style="--pc:${w.color}" aria-label="Week ${w.n}: ${w.title} — see summary">
+    <span class="plan-wk">Week ${w.n}</span><span class="plan-e">${w.emoji}</span><span class="plan-t">${w.title}</span><span class="plan-s">${w.short}</span></button>`);
+  card.addEventListener('click',()=>showPlan(w,card));
+  planGrid.appendChild(card);
 });
 </script>
 </body></html>
