@@ -336,7 +336,7 @@ function buildSlot(a){
   return w;
 }
 function buildReveal(a){
-  const w=$(`<div class="act"><div class="act-h">${a.icon||'🎲'} ${a.title}</div>
+  const w=$(`<div class="act"><div class="act-h">${a.icon||'🎲'} ${a.title}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}
     <div class="wheel-result" style="margin-bottom:13px"><p class="rt">${a.lead||'Tap the button 👇'}</p></div>
     <button class="big-btn">${a.btn||'🎲 Give me one'}</button></div>`);
   const scr=w.querySelector('.wheel-result'),txt=w.querySelector('.rt'),btn=w.querySelector('.big-btn');let last='';
@@ -427,12 +427,16 @@ const WEEKS=[
     {label:"Place",values:["an airport","a haunted house","a wedding","a sinking boat","a job interview","a 3am grocery store","a school reunion","a spaceship"]},
     {label:"Problem",values:["a missing suitcase","a giant lie","the power just went out","nobody speaks the same language","only one chair left","a secret about to spill","everything's on fire (calmly)","they're 3 hours late"]}]}]},
 
-{n:5,stage:"Sample",emoji:"🎤",color:"var(--blue)",title:"Perform It",short:"Try performing",vibe:"Performing is way more than singing. Let's redefine it.",acts:[
-  {type:"pick",icon:"🎤",title:"Starter",sub:"Pick one to talk about.",options:["What could you watch or listen to someone do for hours?","Who is the most talented person you know?"]},
-  {type:"slot",icon:"🎭",title:"Dramatic Reading challenge",btn:"Spin it",reels:[
-    {label:"Read this line",values:["“The bus was six minutes late.”","“I bought some milk today.”","“The printer is out of paper.”","“It might rain later.”","“I forgot my password again.”"]},
-    {label:"…as if it's",values:["a tragedy","breaking news","a horror movie","a love confession","the most epic moment ever"]}]},
-  {type:"reveal",icon:"🌟",title:"Performance dares — draw one",btn:"🎲 Draw a dare",lead:"Tap for a dare 👇",confetti:true,pool:["Give a silly 30-second award speech 🏆","Share a song or dance you love 🎶","Read one sentence in 4 different feelings","Do your best impression of anything","Make a boring task look dramatic"]}]},
+{n:5,stage:"Sample",emoji:"🎤",color:"var(--blue)",title:"Perform It!",short:"Try performing",vibe:"You don't need a “talent.” Just play with how you say, sound, move and present something.",acts:[
+  {type:"pick",icon:"🎵",title:"Warm-up: Pick One",sub:"Choose the one you can answer — a few words or a whole story, both totally count.",options:["🎧 What song always puts you in a good mood?","😂 Who is someone you think is really funny?","🎤 What's something you enjoy watching people perform?"]},
+  {type:"reveal",icon:"🔊",title:"Same Words, Different Performance",sub:"The sentence never changes: “I can't believe you did that.” Only your delivery does. Draw an emotion and say the line that way — whole room together, then in pairs!",btn:"🎭 Draw an emotion",lead:"Tap for an emotion 👇",confetti:true,pool:["😂 trying not to laugh","😡 absolutely furious","😭 about to cry","🤫 trying not to wake someone","😱 completely terrified","🥱 barely awake","👑 ridiculously dramatic"]},
+  {type:"slot",icon:"🎤",title:"Performance Remix — spin a topic + a style",btn:"Spin a remix",reels:[
+    {label:"Everyday topic",values:["☕ Making coffee","🚌 Missing the bus","📱 Your phone dying","🌧️ Ottawa weather","😴 Waking up on Monday","🍕 Making a pizza"]},
+    {label:"Performance style",values:["🎙️ Sports commentator","📺 Breaking news","🏆 Awards speech","🎵 Chant / rhythm","📖 Dramatic narration","😂 Comedy / complaint"]}]},
+  {type:"note",icon:"🎯",title:"Your challenge",text:"In groups of 3–4, turn your ordinary topic into a tiny performance in your style. Use as much or as little English as you want! Even this totally works: “Breaking news! My phone… is dead. ZERO PERCENT! This is a disaster!”"},
+  {type:"note",icon:"🔄",title:"Perform for ONE other group",text:"Team up with just one other group. Group A performs, Group B watches — then switch. Audience, you get one job: what made their performance entertaining? Swap with a new group and go again if there's time."},
+  {type:"note",icon:"🌟",title:"Want the big stage?",text:"Totally optional — does any group want to show theirs to everybody? Volunteering as a whole group is the default, so nobody performs solo. No volunteers? That's fine too — the activity already worked."},
+  {type:"note",icon:"👀",title:"What counts as performing?",text:"Quick chat: what made something entertaining today? Performing doesn't have to mean singing on a stage — it can be your voice, your body, your humour, your culture, music, or just the way you tell something. Next week: 🎨 Create It — you get to make the idea!",tags:["🗣️ Voice","😯 Expression","🕺 Movement","⏱️ Timing","💪 Confidence","😂 Humour","🎵 Sound","🌍 Culture"]}]},
 
 {n:6,stage:"Sample",emoji:"🎨",color:"var(--yellow)",title:"Create It",short:"Make something",vibe:"Make something together in 25 minutes. Artists very welcome.",acts:[
   {type:"pick",icon:"🎨",title:"Starter",sub:"Pick one to talk about.",options:["If you could make a show, channel or podcast, what would it be?","What would you create if anything was possible?"]},
@@ -468,7 +472,7 @@ const SUMMARIES={
  2:"Talk to lots of people with speed-chatting, then explore five creative “vibe corners” to see what you're drawn to. No teams.",
  3:"Storytelling with no speeches. Spin a prompt and turn a real-life moment into a story your group actually wants to hear.",
  4:"Playful, low-stakes improv. Try quick scenes with a partner, then spin up a wild character, place and problem to act out.",
- 5:"Performing is more than singing. Dramatic readings, silly dares and mini-performances stretch what “performing” can mean.",
+ 5:"You don't need a talent — perform with your voice, face and delivery. Say the same words in wild emotions, then remix an everyday topic into a tiny group show.",
  6:"Make something together in 25 minutes from three random ingredients — a skit, a story, an art piece, anything you like.",
  7:"Pick a format you're drawn to and start building a short piece that's actually yours — solo, in a pair, or in a group.",
  8:"Share your piece, swap kind and specific feedback, then take the best ideas and make it better.",
