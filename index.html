@@ -3,7 +3,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Conversation Club</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Creepster&family=Rock+Salt&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#160A2E; --bg2:#20114A; --bg3:#2B1760; --ink:#160A2E; --paper:#FBEFFF;
@@ -158,6 +158,30 @@ a{color:inherit}
   border:3px solid var(--ink);border-radius:14px;padding:14px;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;transition:transform .08s,box-shadow .08s}
 .big-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
 
+/* ENVELOPE (spooky story reveal) */
+.env{position:relative;width:340px;max-width:96%;height:206px;margin:6px auto 30px;cursor:pointer;transition:height .55s cubic-bezier(.2,.8,.3,1)}
+.env.open{height:400px}
+.env:focus-visible{outline:3px dashed var(--paper);outline-offset:6px;border-radius:12px}
+.env .e-back{position:absolute;left:0;right:0;bottom:0;height:150px;background:#271049;border:2.5px solid var(--ink);border-radius:11px;box-shadow:6px 6px 0 var(--shadow)}
+.env .paper{position:absolute;left:7%;right:7%;bottom:14px;background:linear-gradient(170deg,#efe4c8,#ddc89c);border:1px solid #bfa77a;border-radius:5px;
+  padding:20px 18px 18px;box-shadow:0 10px 26px rgba(0,0,0,.5);opacity:0;transform:translateY(8px) rotate(-.6deg);z-index:2;
+  transition:transform .6s cubic-bezier(.2,.8,.3,1) .18s,opacity .4s .18s}
+.env.open .paper{opacity:1;transform:translateY(-196px) rotate(-.6deg);z-index:7}
+.env .paper-label{display:block;text-align:center;font-family:'Creepster',system-ui,cursive;letter-spacing:1.5px;color:#8a1620;font-size:1rem;margin-bottom:9px;opacity:.75}
+.env .creepy{font-family:'Rock Salt','Caveat',cursive;color:#6b0f1a;font-size:1.02rem;line-height:1.95;text-align:center}
+.env .e-pocket{position:absolute;left:0;right:0;bottom:0;height:150px;z-index:5;background:linear-gradient(#3a1d6e,#271049);
+  border:2.5px solid var(--ink);border-radius:11px;clip-path:polygon(0 36%,50% 84%,100% 36%,100% 100%,0 100%)}
+.env .e-flap{position:absolute;left:0;right:0;top:56px;height:84px;z-index:6;background:linear-gradient(#3f2176,#2e1557);
+  border:2.5px solid var(--ink);border-radius:11px 11px 0 0;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;
+  transition:transform .55s ease,z-index 0s .28s;backface-visibility:hidden}
+.env.open .e-flap{transform:rotateX(168deg);z-index:1}
+.env .seal{position:absolute;left:50%;top:92px;transform:translateX(-50%);z-index:7;width:42px;height:42px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,#c0303c,#7c1420);border:2px solid #4a0c13;display:grid;place-items:center;font-size:1.15rem;
+  box-shadow:0 3px 7px rgba(0,0,0,.55);transition:opacity .25s}
+.env.open .seal{opacity:0}
+.env .e-hint{position:absolute;left:0;right:0;bottom:-27px;text-align:center;font-family:var(--font-d);font-weight:600;font-size:.85rem;color:#C9B4DE;transition:opacity .3s}
+.env.open .e-hint{opacity:0}
+
 /* SLOT */
 .slot{display:flex;align-items:stretch;gap:8px;margin-bottom:13px;flex-wrap:wrap}
 .reel{flex:1 1 150px;background:var(--bg3);border:2.5px solid var(--wc);border-radius:14px;padding:12px;text-align:center;min-height:98px;display:flex;flex-direction:column;justify-content:center;gap:6px}
@@ -258,7 +282,7 @@ footer{text-align:center;color:#9C86B6;font-size:.85rem;padding:20px 0 46px}
 <section class="block wrap" style="padding-top:6px"><div id="weeks"></div></section>
 
 <section class="block wrap" style="padding-top:6px">
-  <div class="outro"><h2>Week 10 is a showcase. Performing is 100% optional.</h2>
+  <div class="outro"><h2>Week 11 is a showcase. Performing is 100% optional.</h2>
     <p>Some people do skits, songs, stories or comedy. Others watch, help, and cheer everyone on. Both are the whole point.</p>
     <span class="mini">💛 "I'm just here to talk and have fun" — that counts. You belong here.</span></div>
   <footer>Conversation Club · show up · say hi · see what happens</footer>
@@ -314,7 +338,7 @@ function buildWheel(a){
     const[lx,ly]=pt(i*seg,lr);
     paths+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Fredoka,sans-serif" font-weight="600" font-size="11" fill="#160A2E">${(a.labels||a.pool)[i]}</text>`;}
   const svg=`<svg class="wheel-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">${paths}<circle cx="${cx}" cy="${cy}" r="19" fill="#FBEFFF" stroke="#160A2E" stroke-width="3"/></svg>`;
-  const w=$(`<div class="act"><div class="act-h">${a.icon||'🎡'} ${a.title}</div>
+  const w=$(`<div class="act"><div class="act-h">${a.icon||'🎡'} ${a.title}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}
     <div class="wheel-wrap"><div class="wheel-stage"><div class="wheel-pointer">▼</div>${svg}</div>
     <button class="big-btn">🎡 Spin the wheel</button>
     <div class="wheel-result"><p class="rt">Give it a spin! 👆</p></div></div></div>`);
@@ -381,7 +405,20 @@ function buildRounds(a){
     const pills=rr.querySelector('.rpills');r.qs.forEach(q=>pills.appendChild($(`<span>${q}</span>`)));box.appendChild(rr);});
   return w;
 }
-const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote};
+function buildEnvelope(a){
+  const w=$(`<div class="act"><div class="act-h">${a.icon||'✉️'} ${a.title}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}
+    <div class="env" role="button" tabindex="0" aria-label="Open the letter to reveal the first line">
+      <div class="paper"><span class="paper-label">a letter for you…</span><p class="creepy">${a.line}</p></div>
+      <div class="e-back"></div><div class="e-pocket"></div><div class="e-flap"></div>
+      <div class="seal">🕷️</div><div class="e-hint">✉️ Tap to open…</div>
+    </div></div>`);
+  const env=w.querySelector('.env');
+  const open=()=>{if(!env.classList.contains('open')){env.classList.add('open');burst();}};
+  env.addEventListener('click',open);
+  env.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  return w;
+}
+const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope};
 
 /* ---------- THE 10 WEEKS ---------- */
 const WEEKS=[
@@ -395,7 +432,7 @@ const WEEKS=[
     {q:"…is a morning person",dot:"var(--teal)"},{q:"…could eat one food forever",dot:"var(--teal)"},{q:"…is watching a good show",dot:"var(--teal)"},
     {q:"…has a hidden talent",dot:"var(--violet)"},{q:"…is obsessed with something",dot:"var(--violet)"},{q:"…wants to try something new",dot:"var(--violet)"},
     {q:"…would survive a zombie apocalypse",dot:"var(--pink)"},{q:"…has a useless talent",dot:"var(--pink)"},{q:"…wants a weird superpower",dot:"var(--pink)"}]},
-  {type:"note",icon:"💡",title:"Then…",text:"Share the most interesting thing you found out about someone. And a heads-up: Week 10 is a showcase, and performing is always optional."}]},
+  {type:"note",icon:"💡",title:"Then…",text:"Share the most interesting thing you found out about someone. And a heads-up: Week 11 is a showcase, and performing is always optional."}]},
 
 {n:2,stage:"Explore",emoji:"🌟",color:"var(--violet)",title:"Find Your Thing",short:"Find your vibe",vibe:"Talk to lots of new people, then explore the five creative vibes. No teams, no commitments.",acts:[
   {type:"pick",icon:"🌟",title:"Pick your warm-up",sub:"Choose a question and answer it out loud when it's your turn.",options:["What's something you wish you were really good at?","If you could instantly master one skill, what would it be?","What's a talent you'd love to steal from someone?"]},
@@ -415,9 +452,9 @@ const WEEKS=[
 
 {n:3,stage:"Sample",emoji:"📖",color:"var(--teal)",title:"Tell It",short:"Tell a story",vibe:"Turn real life into a story worth hearing. No speeches.",acts:[
   {type:"pick",icon:"📖",title:"Starter",sub:"Pick one to talk about.",options:["What is something funny or interesting that happened to you recently?","What is a story your friends love you to tell?"]},
-  {type:"wheel",icon:"🎡",title:"Story Roulette",pool:["A time everything went wrong","A funny misunderstanding","Something I believed as a kid","A time I couldn't stop laughing","My worst cooking moment","A journey I'll never forget","A time I got completely lost","Something embarrassing that turned out fine"],
-    labels:["Went wrong","Mix-up","As a kid","Laughing","Cooking","A journey","Got lost","Embarrassing"]},
-  {type:"note",icon:"👂",title:"Story Circles",text:"Tell one story to your group. Listeners stay curious — ask “what happened next?”, “what did you do?”, “why?”"}]},
+  {type:"note",icon:"👂",title:"Story Circles — how it works",text:"Get into circles of 3–4. As a group, spin the wheel once — that's your story. Now build it together: go around the circle, everyone adding a bit (“what happened next?”, “then what?”, “why?”) until you've made one story as a team."},
+  {type:"wheel",icon:"🎡",title:"Story Roulette — one spin per group",sub:"Spin once as a group — that's the story you'll build together. Don't love it? Spin again.",pool:["A time everything went wrong","A funny misunderstanding","Something I believed as a kid","A time I couldn't stop laughing","My worst cooking moment","A journey I'll never forget","A time I got completely lost","Something embarrassing that turned out fine"],
+    labels:["Went wrong","Mix-up","As a kid","Laughing","Cooking","A journey","Got lost","Embarrassing"]}]},
 
 {n:4,stage:"Sample",emoji:"🎭",color:"var(--tangerine)",title:"Act It",short:"Try acting",vibe:"Be someone else for sixty seconds. Nobody's really watching.",acts:[
   {type:"pick",icon:"🎭",title:"Starter",sub:"Pick one to talk about.",options:["If you could be in any movie or show, which one?","Which character would you love to play?"]},
@@ -427,7 +464,14 @@ const WEEKS=[
     {label:"Place",values:["an airport","a haunted house","a wedding","a sinking boat","a job interview","a 3am grocery store","a school reunion","a spaceship"]},
     {label:"Problem",values:["a missing suitcase","a giant lie","the power just went out","nobody speaks the same language","only one chair left","a secret about to spill","everything's on fire (calmly)","they're 3 hours late"]}]}]},
 
-{n:5,stage:"Sample",emoji:"🎤",color:"var(--blue)",title:"Perform It!",short:"Try performing",vibe:"You don't need a “talent.” Just play with how you say, sound, move and present something.",acts:[
+{n:5,stage:"Special",emoji:"🎃",color:"var(--violet)",title:"Halloween Week!",short:"Scary-story game",vibe:"One big, evolving scary-story game. Nobody writes anything — you just keep the story going.",acts:[
+  {type:"pick",icon:"🎃",title:"Pick Your Poison",sub:"Choose one to talk about in pairs or small groups.",options:["👻 Do you believe in ghosts?","🎬 What's the scariest movie you've ever seen?","🏚️ Would you spend the night in a haunted house for $1,000?"]},
+  {type:"envelope",icon:"👻",title:"Give Us Your Best Spooky Story",sub:"In groups of 4–5, you'll build ONE spooky story together. Open the envelope to reveal your first line — then go around the group, everyone adding what happens next.",line:"It was 11:47 p.m. when someone knocked on the door… but everyone who lived here was already home."},
+  {type:"note",icon:"🛑",title:"Your one NOPE",text:"Before the chaos starts: each group gets ONE “NOPE!” for the whole game. If someone adds something the group hates, shout “NOPE!” together — it's erased, and that person comes up with something else. Use it wisely…"},
+  {type:"note",icon:"😈",title:"Watch out — interruptions!",text:"Every few minutes your teacher will throw in a NEW RULE you have to work into your story, then keep it going. You never know what's coming…",tags:["🚨 Someone disappears","📱 A phone rings — whose?","💡 The lights go out","👀 You are NOT alone","🐈 A cat is involved","🍕 Someone's holding a pizza"]},
+  {type:"note",icon:"👻",title:"Tell us what happened!",text:"Each group gives the room the 30-second version of your spooky story — tell it together, interrupt, add things! Then vote: whose story was the creepiest? You all survived. See you next week! 🎃"}]},
+
+{n:6,stage:"Sample",emoji:"🎤",color:"var(--blue)",title:"Perform It!",short:"Try performing",vibe:"You don't need a “talent.” Just play with how you say, sound, move and present something.",acts:[
   {type:"pick",icon:"🎵",title:"Warm-up: Pick One",sub:"Choose the one you can answer — a few words or a whole story, both totally count.",options:["🎧 What song always puts you in a good mood?","😂 Who is someone you think is really funny?","🎤 What's something you enjoy watching people perform?"]},
   {type:"reveal",icon:"🔊",title:"Same Words, Different Performance",sub:"The sentence never changes: “I can't believe you did that.” Only your delivery does. Draw an emotion and say the line that way — whole room together, then in pairs!",btn:"🎭 Draw an emotion",lead:"Tap for an emotion 👇",confetti:true,pool:["😂 trying not to laugh","😡 absolutely furious","😭 about to cry","🤫 trying not to wake someone","😱 completely terrified","🥱 barely awake","👑 ridiculously dramatic"]},
   {type:"slot",icon:"🎤",title:"Performance Remix — spin a topic + a style",btn:"Spin a remix",reels:[
@@ -438,7 +482,7 @@ const WEEKS=[
   {type:"note",icon:"🌟",title:"Want the big stage?",text:"Totally optional — does any group want to show theirs to everybody? Volunteering as a whole group is the default, so nobody performs solo. No volunteers? That's fine too — the activity already worked."},
   {type:"note",icon:"👀",title:"What counts as performing?",text:"Quick chat: what made something entertaining today? Performing doesn't have to mean singing on a stage — it can be your voice, your body, your humour, your culture, music, or just the way you tell something. Next week: 🎨 Create It — you get to make the idea!",tags:["🗣️ Voice","😯 Expression","🕺 Movement","⏱️ Timing","💪 Confidence","😂 Humour","🎵 Sound","🌍 Culture"]}]},
 
-{n:6,stage:"Sample",emoji:"🎨",color:"var(--yellow)",title:"Create It",short:"Make something",vibe:"Make something together in 25 minutes. Artists very welcome.",acts:[
+{n:7,stage:"Sample",emoji:"🎨",color:"var(--yellow)",title:"Create It",short:"Make something",vibe:"Make something together in 25 minutes. Artists very welcome.",acts:[
   {type:"pick",icon:"🎨",title:"Starter",sub:"Pick one to talk about.",options:["If you could make a show, channel or podcast, what would it be?","What would you create if anything was possible?"]},
   {type:"slot",icon:"🎰",title:"Creative Challenge — spin your 3 ingredients",btn:"Spin ingredients",reels:[
     {label:"Location",values:["an airport","a restaurant","a rooftop","a laundromat","a spaceship","a museum after dark","a tiny elevator","a beach at midnight"]},
@@ -446,22 +490,22 @@ const WEEKS=[
     {label:"A line of dialogue",values:["“You weren't supposed to see that.”","“We need to leave. Now.”","“I can explain everything.”","“That's not what it looks like.”","“Trust me, I've done this before.”","“Whatever you do, don't open it.”"]}]},
   {type:"note",icon:"⏱️",title:"Then: 25 minutes, make ~2 minutes",text:"A skit, a story, a fake news report, an art piece, a song, a game show — totally your call. Rough edges are welcome."}]},
 
-{n:7,stage:"Build",emoji:"🛠️",color:"var(--pink)",title:"Build It!",short:"Start your idea",vibe:"Start building something that's actually yours.",acts:[
+{n:8,stage:"Build",emoji:"🛠️",color:"var(--pink)",title:"Build It!",short:"Start your idea",vibe:"Start building something that's actually yours.",acts:[
   {type:"checklist",icon:"☕",title:"Idea Café — tap what you're drawn to",unit:"picked",items:["📖 Story / spoken word","🎭 Skit / acting","🎤 Music / performance","😂 Comedy","🌍 Cultural performance","🎙️ Hosting / MC","🎨 Art / visual piece","🤯 Something totally different"]},
   {type:"note",icon:"🧩",title:"Find your people",text:"Go solo, pair up, join a group, help someone else's piece, or don't perform at all. Then build a rough 2–5 minute piece — most of the hour is just making and trying things."}]},
 
-{n:8,stage:"Rehearse",emoji:"🎬",color:"var(--violet)",title:"Make It Better",short:"Make it better",vibe:"Make your piece even better with friendly feedback. Not a rehearsal class.",acts:[
+{n:9,stage:"Rehearse",emoji:"🎬",color:"var(--violet)",title:"Make It Better",short:"Make it better",vibe:"Make your piece even better with friendly feedback. Not a rehearsal class.",acts:[
   {type:"guide",icon:"💬",title:"How to give good feedback",intro:"Good feedback is <b>kind, specific, and helpful</b>. Don't just say “it was good.” Say what you liked and <b>why</b> — then offer one friendly idea. Try these sentence starters:",
     frames:[{e:"❤️",f:"“I loved ___ because ___.”"},{e:"😂",f:"“The part that really worked was ___.”"},{e:"💡",f:"“What if you tried ___?”"}],
     bad:"“It was good.” (This doesn't help — it's too general.)",
     good:"“I loved the ending because it surprised me. What if you said the last line a bit louder?”"},
   {type:"note",icon:"🔁",title:"Then: swap & revise",text:"Perform for another group, trade feedback, take the good ideas, leave the rest, and try again."}]},
 
-{n:9,stage:"Rehearse",emoji:"🌟",color:"var(--teal)",title:"Ready the Show",short:"Get ready",vibe:"Make the showcase feel easy. Let's build the run of show.",acts:[
+{n:10,stage:"Rehearse",emoji:"🌟",color:"var(--teal)",title:"Ready the Show",short:"Get ready",vibe:"Make the showcase feel easy. Let's build the run of show.",acts:[
   {type:"pick",icon:"🌟",title:"Warm-up",sub:"Pick one to talk about.",options:["What are you excited or nervous about for next week?","What would make the showcase fun for you?"]},
   {type:"checklist",icon:"📋",title:"Build the show together — decide as a group",unit:"decided",items:["🎤 Who's the MC?","🔢 What order feels good?","🎵 Who needs music / props / help?","🚀 How do we open?","🎬 How do we end?"]}]},
 
-{n:10,stage:"Share",emoji:"🎉",color:"var(--tangerine)",title:"The Showcase",short:"The show!",vibe:"It's an event, not an exam. Showtime — or best audience ever.",acts:[
+{n:11,stage:"Share",emoji:"🎉",color:"var(--tangerine)",title:"The Showcase",short:"The show!",vibe:"It's an event, not an exam. Showtime — or best audience ever.",acts:[
   {type:"note",icon:"🎉",title:"The Show — a mix of everything",text:"Skits, stories, music, comedy, readings, group pieces — whatever the club made. Not performing? You're the audience, the helpers, and the people cheering everyone on."},
   {type:"reveal",icon:"🏁",title:"Finale — go around the room",btn:"🎉 Ask the room",lead:"Tap to celebrate 👇",confetti:true,pool:["What was your favourite Conversation Club memory?","What surprised you this term?","What performance did you love?","Did you do something you didn't think you'd do?","What's one thing you'll miss?"]}]},
 ];
@@ -470,14 +514,15 @@ const WEEKS=[
 const SUMMARIES={
  1:"Meet the room through easy question rounds and a “Find Someone Who” hunt. Pure mingling — nothing to prepare, no pressure.",
  2:"Talk to lots of people with speed-chatting, then explore five creative “vibe corners” to see what you're drawn to. No teams.",
- 3:"Storytelling with no speeches. Spin a prompt and turn a real-life moment into a story your group actually wants to hear.",
+ 3:"Storytelling with no speeches. In small circles, spin the wheel for a prompt and tell that story — listeners stay curious.",
  4:"Playful, low-stakes improv. Try quick scenes with a partner, then spin up a wild character, place and problem to act out.",
- 5:"You don't need a talent — perform with your voice, face and delivery. Say the same words in wild emotions, then remix an everyday topic into a tiny group show.",
- 6:"Make something together in 25 minutes from three random ingredients — a skit, a story, an art piece, anything you like.",
- 7:"Pick a format you're drawn to and start building a short piece that's actually yours — solo, in a pair, or in a group.",
- 8:"Share your piece, swap kind and specific feedback, then take the best ideas and make it better.",
- 9:"A relaxed run-through. Polish your piece and decide together how the whole showcase will flow.",
- 10:"Showtime — a mix of everything the club made. Perform, or be the audience and hype crew. Then celebrate together.",
+ 5:"A spooky-story game. In groups, start from a creepy found message and build one scary story together — then survive the interruptions your teacher throws in.",
+ 6:"You don't need a talent — perform with your voice, face and delivery. Say the same words in wild emotions, then remix an everyday topic into a tiny group show.",
+ 7:"Make something together in 25 minutes from three random ingredients — a skit, a story, an art piece, anything you like.",
+ 8:"Pick a format you're drawn to and start building a short piece that's actually yours — solo, in a pair, or in a group.",
+ 9:"Share your piece, swap kind and specific feedback, then take the best ideas and make it better.",
+ 10:"A relaxed run-through. Polish your piece and decide together how the whole showcase will flow.",
+ 11:"Showtime — a mix of everything the club made. Perform, or be the audience and hype crew. Then celebrate together.",
 };
 const weeksBox=document.getElementById('weeks'),navInner=document.getElementById('wknav-inner'),planGrid=document.getElementById('plan-grid'),planDetail=document.getElementById('plan-detail');
 function showPlan(w,card){
