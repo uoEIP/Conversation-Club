@@ -182,6 +182,35 @@ a{color:inherit}
 .env .e-hint{position:absolute;left:0;right:0;bottom:-27px;text-align:center;font-family:var(--font-d);font-weight:600;font-size:.85rem;color:#C9B4DE;transition:opacity .3s}
 .env.open .e-hint{opacity:0}
 
+/* SCRIPTS (movie-script picker) */
+.scripts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(146px,1fr));gap:10px;margin-bottom:4px}
+.scard{text-align:left;background:var(--bg3);border:2.5px solid rgba(251,239,255,.16);border-radius:14px;padding:12px 13px;
+  color:var(--paper);font:inherit;cursor:pointer;transition:transform .08s,border-color .15s;display:flex;flex-direction:column;gap:3px}
+.scard:hover{transform:translateY(-2px)}
+.scard.active{border-color:var(--wc);background:var(--wc);color:var(--ink)}
+.scard .se{font-size:1.5rem;line-height:1}
+.scard .st{font-family:var(--font-d);font-weight:700;font-size:1rem;line-height:1.05}
+.scard .sg{font-family:var(--font-d);font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;color:var(--wc)}
+.scard.active .sg{color:rgba(22,10,46,.6)}
+.scard .sl{font-size:.8rem;color:#C9B4DE;line-height:1.3}
+.scard.active .sl{color:rgba(22,10,46,.75)}
+.scards-hint{text-align:center;color:#9C86B6;font-family:var(--font-d);font-weight:500;font-size:.9rem;margin:14px 0 2px}
+.screenplay{background:#f4efe3;color:#1b1b1b;border:3px solid var(--ink);border-radius:8px;box-shadow:7px 7px 0 var(--shadow);
+  padding:26px 20px 24px;margin-top:14px;font-family:'Courier New',Courier,monospace;position:relative;display:none}
+.screenplay.show{display:block;animation:pop .4s cubic-bezier(.3,1.4,.5,1)}
+.screenplay::before{content:"";position:absolute;left:14px;top:9px;bottom:9px;width:2px;background:repeating-linear-gradient(#d9492f 0 7px,transparent 7px 15px);opacity:.35}
+.sp-fade{font-size:.8rem;letter-spacing:1px;color:#555;margin-bottom:12px}
+.sp-title{text-align:center;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:1.15rem}
+.sp-sub{text-align:center;font-size:.82rem;color:#555;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.sp-roles{text-align:center;font-size:.86rem;background:#e7dcc2;border:1px dashed #b7a079;border-radius:6px;padding:7px 10px;margin:14px 0 6px;color:#3a3020}
+.sp-roles b{letter-spacing:.3px}
+.sp-scene{font-weight:700;text-transform:uppercase;margin:16px 0 8px;font-size:.92rem;letter-spacing:.3px}
+.sp-action{margin:8px 2px;color:#333;font-size:.9rem;line-height:1.5}
+.sp-cue{text-align:center;font-weight:700;text-transform:uppercase;margin-top:13px;letter-spacing:1px;font-size:.92rem}
+.sp-paren{text-align:center;font-size:.82rem;color:#555}
+.sp-dia{max-width:80%;margin:1px auto 0;text-align:left;font-size:.95rem;line-height:1.5}
+.sp-end{text-align:center;font-weight:700;letter-spacing:2px;margin-top:20px;font-size:.9rem;color:#444}
+
 /* SLOT */
 .slot{display:flex;align-items:stretch;gap:8px;margin-bottom:13px;flex-wrap:wrap}
 .reel{flex:1 1 150px;background:var(--bg3);border:2.5px solid var(--wc);border-radius:14px;padding:12px;text-align:center;min-height:98px;display:flex;flex-direction:column;justify-content:center;gap:6px}
@@ -301,6 +330,7 @@ function burst(){if(window.matchMedia('(prefers-reduced-motion:reduce)').matches
       {duration:850+Math.random()*500,easing:'cubic-bezier(.2,.6,.4,1)'}).onfinish=()=>p.remove();}}
 
 /* RULES */
+const SCRIPTS=[{"title": "The Wrong Order", "emoji": "🍔", "genre": "Comedy", "logline": "A simple lunch goes very, very wrong.", "roles": ["Customer", "Waiter", "Cook"], "lines": [["s", "INT. RESTAURANT — DAY"], ["a", "The CUSTOMER sits down. The WAITER walks over with a notebook."], ["WAITER", "Hello! Welcome. What would you like?"], ["CUSTOMER", "Hi. One cheeseburger, please."], ["WAITER", "Great choice!"], ["a", "The Waiter shouts to the COOK."], ["WAITER", "One cheeseburger!"], ["COOK", "One ice cream? Okay!", "(happy)"], ["CUSTOMER", "No, no. A cheeseburger!"], ["a", "The Cook brings a bowl of soup."], ["COOK", "Here is your pizza!"], ["CUSTOMER", "This is soup.", "(confused)"], ["WAITER", "So sorry! One cheeseburger, please!"], ["a", "The Cook brings a banana."], ["COOK", "Enjoy your cheeseburger!"], ["CUSTOMER", "This is a banana."], ["WAITER", "Our best banana!", "(smiling)"], ["a", "The Customer stands up and walks to the door."], ["CUSTOMER", "I think I will cook at home."], ["a", "Everyone freezes."]]}, {"title": "Is Anyone There?", "emoji": "👻", "genre": "Spooky Comedy", "logline": "Two friends hear a noise in a dark house.", "roles": ["Maya", "Liam", "Stranger"], "lines": [["s", "INT. OLD HOUSE — NIGHT"], ["a", "MAYA and LIAM walk slowly. It is very dark."], ["MAYA", "I don't like this house. It's cold."], ["LIAM", "Don't worry. Nobody is here."], ["a", "A loud sound. BANG!"], ["MAYA", "What was that?!"], ["LIAM", "Maybe… the wind?", "(scared)"], ["a", "A STRANGER appears behind them."], ["STRANGER", "Hello."], ["MAYA", "AHHH!", "(screaming)"], ["LIAM", "AHHH!", "(screaming)"], ["STRANGER", "Sorry! I am your new neighbour. I heard a noise."], ["LIAM", "You scared us!"], ["STRANGER", "You scared ME. Why are you in my house?"], ["MAYA", "This… is your house?", "(slowly)"], ["LIAM", "Run!"], ["a", "Maya and Liam run away. The Stranger waves."], ["STRANGER", "Nice to meet you!"]]}, {"title": "The Lost Phone", "emoji": "📱", "genre": "Comedy", "logline": "Jamie loses a phone… and finds a detective.", "roles": ["Jamie", "Alex", "Stranger"], "lines": [["s", "INT. BUS STOP — DAY"], ["a", "JAMIE checks every pocket. Very worried."], ["JAMIE", "My phone! Where is my phone?"], ["ALEX", "Use my phone. Call it!"], ["JAMIE", "Good idea."], ["a", "Alex calls. A phone rings in the STRANGER's bag."], ["STRANGER", "Hello?", "(answering)"], ["JAMIE", "Hello? That's my phone!"], ["STRANGER", "No, this is MY phone."], ["JAMIE", "Really? What name is on the screen?"], ["STRANGER", "It says… 'Jamie's phone.'"], ["JAMIE", "That's me! I am Jamie!"], ["STRANGER", "Oh. …Do you want it back?", "(embarrassed)"], ["JAMIE", "Yes, please."], ["ALEX", "Great detective work, everyone.", "(laughing)"]]}, {"title": "First Day at Work", "emoji": "💼", "genre": "Comedy", "logline": "Sam's very first day does not go smoothly.", "roles": ["Sam", "Boss", "Pat"], "lines": [["s", "INT. OFFICE — MORNING"], ["a", "SAM walks in, nervous. The BOSS smiles."], ["BOSS", "Welcome, Sam! Today is your first day."], ["SAM", "Thank you! I am ready to work."], ["BOSS", "Great. First, please make the coffee."], ["a", "Sam presses a button. A loud alarm rings."], ["PAT", "Um… that was the fire alarm."], ["BOSS", "Interesting choice.", "(calm)"], ["SAM", "Sorry! I will fix it!"], ["a", "Sam slips. Papers fly everywhere."], ["PAT", "Don't worry. My first day was worse.", "(helping)"], ["SAM", "Really?"], ["PAT", "No. But I am being nice."], ["BOSS", "Welcome to the team, Sam.", "(smiling)"]]}, {"title": "The Sleepy Villain", "emoji": "🦸", "genre": "Superhero Comedy", "logline": "A hero meets the world's most boring villain.", "roles": ["Captain Awesome", "Citizen", "Doctor Snooze"], "lines": [["s", "EXT. CITY STREET — DAY"], ["a", "A CITIZEN runs to CAPTAIN AWESOME."], ["CITIZEN", "Captain Awesome! Help! A villain is here!"], ["CAPTAIN AWESOME", "Don't worry! I am here to save the day!"], ["a", "DOCTOR SNOOZE enters, yawning."], ["DOCTOR SNOOZE", "I am Doctor Snooze. I will make everyone… sleepy."], ["CAPTAIN AWESOME", "Never! I am too strong to—"], ["CAPTAIN AWESOME", "…to sleep.", "(yawning)"], ["CITIZEN", "Captain? Are you okay?"], ["CAPTAIN AWESOME", "I just need… a small nap.", "(sleepy)"], ["a", "The Captain lies down and snores."], ["DOCTOR SNOOZE", "It worked? It never works!", "(surprised)"], ["CITIZEN", "Can you make me sleepy too? I have work tomorrow."], ["DOCTOR SNOOZE", "…Sure. Everyone, nap time."], ["a", "They all lie down and sleep."]]}, {"title": "Lost in the City", "emoji": "🗺️", "genre": "Comedy", "logline": "A tourist asks two locals who never agree.", "roles": ["Tourist", "Robin", "Chris"], "lines": [["s", "EXT. BUSY STREET — DAY"], ["a", "A TOURIST holds a big map, confused."], ["TOURIST", "Excuse me! Where is the train station?"], ["ROBIN", "Oh, easy. Go left. Then straight."], ["CHRIS", "No, no. Go RIGHT. Then straight."], ["ROBIN", "Left!"], ["CHRIS", "Right!"], ["TOURIST", "So… left and right?", "(looking back and forth)"], ["ROBIN", "Yes!"], ["CHRIS", "No!"], ["a", "The Tourist points straight ahead."], ["TOURIST", "Wait. Is that the train station? Right there?"], ["ROBIN", "…Yes."], ["CHRIS", "…Yes."], ["TOURIST", "Thank you for your help."], ["ROBIN", "We are great guides."], ["CHRIS", "The best."]]}, {"title": "The Surprise Party", "emoji": "🎉", "genre": "Comedy", "logline": "The worst-kept secret in party history.", "roles": ["Jess", "Mo", "Taylor"], "lines": [["s", "INT. LIVING ROOM — EVENING"], ["a", "JESS and MO hide behind a sofa. The lights are off."], ["JESS", "Taylor is coming! Be quiet!", "(whispering)"], ["MO", "OKAY! I AM BEING QUIET!", "(very loud)"], ["JESS", "Shhh!"], ["a", "TAYLOR opens the door."], ["TAYLOR", "Hello? Why is it dark?"], ["JESS", "SURPRISE!", "(jumping up)"], ["MO", "SURPRISE!", "(jumping up)"], ["TAYLOR", "I know. You told me yesterday, Mo.", "(not surprised)"], ["MO", "I can't keep secrets.", "(guilty)"], ["JESS", "We worked so hard!"], ["TAYLOR", "It's okay. I love it. Is there cake?"], ["MO", "…I ate the cake."], ["JESS", "MO!"], ["TAYLOR", "Best party ever."]]}];
 const RULES=[
  {e:"🗣️",t:"Speak, even if it's not perfect",p:"Mistakes are welcome here. The goal is to communicate, not to be perfect."},
  {e:"🔄",t:"Keep the conversation going",p:"Don't just answer — ask questions, react, and help others join in."},
@@ -418,7 +448,36 @@ function buildEnvelope(a){
   env.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
   return w;
 }
-const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope};
+function renderScript(s){
+  let b=`<div class="sp-fade">FADE IN:</div><div class="sp-title">${s.title}</div>
+    <div class="sp-sub">${s.genre} · a 2-minute scene</div>
+    <div class="sp-roles"><b>ROLES (3):</b> ${s.roles.join('  ·  ')}</div>`;
+  s.lines.forEach(l=>{
+    if(l[0]==='s') b+=`<div class="sp-scene">${l[1]}</div>`;
+    else if(l[0]==='a') b+=`<div class="sp-action">${l[1]}</div>`;
+    else b+=`<div class="sp-cue">${l[0]}</div>`+(l[2]?`<div class="sp-paren">${l[2]}</div>`:'')+`<div class="sp-dia">${l[1]}</div>`;
+  });
+  b+=`<div class="sp-end">— THE END —</div>`;
+  return b;
+}
+function buildScripts(a){
+  const w=$(`<div class="act"><div class="act-h">${a.icon||'🎬'} ${a.title}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}
+    <div class="scripts-grid"></div>
+    <div class="scards-hint">🎬 Tap a script to open it</div>
+    <div class="screenplay"></div></div>`);
+  const grid=w.querySelector('.scripts-grid'),panel=w.querySelector('.screenplay'),hint=w.querySelector('.scards-hint');
+  SCRIPTS.forEach((s,i)=>{
+    const c=$(`<button type="button" class="scard"><span class="se">${s.emoji}</span><span class="sg">${s.genre}</span><span class="st">${s.title}</span><span class="sl">${s.logline}</span></button>`);
+    c.addEventListener('click',()=>{
+      grid.querySelectorAll('.scard').forEach(x=>x.classList.remove('active'));c.classList.add('active');
+      hint.style.display='none';
+      panel.innerHTML=renderScript(s);panel.classList.remove('show');void panel.offsetWidth;panel.classList.add('show');
+    });
+    grid.appendChild(c);
+  });
+  return w;
+}
+const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope,scripts:buildScripts};
 
 /* ---------- THE 10 WEEKS ---------- */
 const WEEKS=[
@@ -456,13 +515,11 @@ const WEEKS=[
   {type:"wheel",icon:"🎡",title:"Story Roulette — one spin per group",sub:"Spin once as a group — that's the story you'll build together. Don't love it? Spin again.",pool:["A time everything went wrong","A funny misunderstanding","Something I believed as a kid","A time I couldn't stop laughing","My worst cooking moment","A journey I'll never forget","A time I got completely lost","Something embarrassing that turned out fine"],
     labels:["Went wrong","Mix-up","As a kid","Laughing","Cooking","A journey","Got lost","Embarrassing"]}]},
 
-{n:4,stage:"Sample",emoji:"🎭",color:"var(--tangerine)",title:"Act It",short:"Try acting",vibe:"Be someone else for sixty seconds. Nobody's really watching.",acts:[
-  {type:"pick",icon:"🎭",title:"Starter",sub:"Pick one to talk about.",options:["If you could be in any movie or show, which one?","Which character would you love to play?"]},
-  {type:"pick",icon:"🎬",title:"Try a quick scene",sub:"Pick a scene and act it out with a partner for 30–60 seconds.",options:["You ordered the wrong food","You are completely lost","You convince a friend to come somewhere","World's worst job interview","The worst restaurant ever","The world's worst tour guide","Two roommates find something strange","Returning something silly"]},
-  {type:"slot",icon:"🎰",title:"Audience Challenge generator",btn:"Spin a scene",reels:[
-    {label:"Character",values:["a nervous astronaut","a dramatic chef","a confused tourist","a retired superhero","a caffeinated barista","a suspicious librarian","a fortune teller","a substitute teacher"]},
-    {label:"Place",values:["an airport","a haunted house","a wedding","a sinking boat","a job interview","a 3am grocery store","a school reunion","a spaceship"]},
-    {label:"Problem",values:["a missing suitcase","a giant lie","the power just went out","nobody speaks the same language","only one chair left","a secret about to spill","everything's on fire (calmly)","they're 3 hours late"]}]}]},
+{n:4,stage:"Sample",emoji:"🎭",color:"var(--tangerine)",title:"Act It",short:"Act a scene",vibe:"Grab a real movie script and act out a short scene — just read it out loud and have fun. No memorizing!",acts:[
+  {type:"pick",icon:"🎬",title:"Starter",sub:"Pick one to talk about.",options:["If you could be in any movie or show, which one?","Which character would you love to play?"]},
+  {type:"note",icon:"👥",title:"How it works",text:"Get into groups of 3. Your group picks ONE script below — each script has 3 roles, so everyone gets a part. Read it together a couple of times, decide who plays who, add some acting… then perform your 2-minute scene! You can read straight from the script — no need to memorize."},
+  {type:"scripts",icon:"🎬",title:"Pick your scene — tap to open the script",sub:"7 short scripts, 3 roles each. Choose the one your group likes best."},
+  {type:"note",icon:"🎭",title:"Act it out",text:"Practice a few times (try it bigger, louder, sillier each time!), then perform for another group — or for everyone, if you want. Totally optional. Tip: use your voice and face, point and move around. You don't need perfect English — just go for it!"}]},
 
 {n:5,stage:"Special",emoji:"🎃",color:"var(--violet)",title:"Halloween Week!",short:"Scary-story game",vibe:"One big, evolving scary-story game. Nobody writes anything — you just keep the story going.",acts:[
   {type:"pick",icon:"🎃",title:"Pick Your Poison",sub:"Choose one to talk about in pairs or small groups.",options:["👻 Do you believe in ghosts?","🎬 What's the scariest movie you've ever seen?","🏚️ Would you spend the night in a haunted house for $1,000?"]},
@@ -515,7 +572,7 @@ const SUMMARIES={
  1:"Meet the room through easy question rounds and a “Find Someone Who” hunt. Pure mingling — nothing to prepare, no pressure.",
  2:"Talk to lots of people with speed-chatting, then explore five creative “vibe corners” to see what you're drawn to. No teams.",
  3:"Storytelling with no speeches. In small circles, spin the wheel for a prompt and tell that story — listeners stay curious.",
- 4:"Playful, low-stakes improv. Try quick scenes with a partner, then spin up a wild character, place and problem to act out.",
+ 4:"Each group of 3 picks a short movie script and acts out a fun 2-minute scene — just read it out loud, no memorizing.",
  5:"A spooky-story game. In groups, start from a creepy found message and build one scary story together — then survive the interruptions your teacher throws in.",
  6:"You don't need a talent — perform with your voice, face and delivery. Say the same words in wild emotions, then remix an everyday topic into a tiny group show.",
  7:"Make something together in 25 minutes from three random ingredients — a skit, a story, an art piece, anything you like.",
