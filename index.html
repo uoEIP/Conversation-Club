@@ -268,6 +268,46 @@ a{color:inherit}
 .reactrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .reactrow span{font-size:.9rem;background:var(--bg3);border:1.5px solid rgba(251,239,255,.12);color:#EBDDFA;padding:7px 12px;border-radius:999px}
 
+/* GROUPS (small vs big adaptation) */
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}
+.grp{text-align:left;background:var(--bg3);border:2.5px solid rgba(251,239,255,.14);border-radius:18px;padding:15px 16px;cursor:pointer;font:inherit;color:var(--paper);transition:border-color .2s,transform .15s;display:flex;flex-direction:column;gap:3px}
+.grp:hover{transform:translateY(-2px)}
+.grp.open{border-color:var(--wc,var(--teal))}
+.grp-top{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.grp-ic{font-size:1.5rem}
+.grp-sz{font-family:var(--font-d);font-weight:700;font-size:1.04rem}
+.grp-ct{margin-left:auto;font-family:var(--font-d);font-weight:700;font-size:.82rem;background:var(--wc,var(--teal));color:var(--ink);padding:3px 11px;border-radius:999px}
+.grp-tx{color:#C9B4DE;font-size:.93rem;line-height:1.46;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .3s ease,margin .3s}
+.grp.open .grp-tx{max-height:280px;opacity:1;margin-top:3px}
+.grp-tap{font-family:var(--font-d);font-weight:600;font-size:.76rem;color:var(--wc,var(--teal));opacity:.9}
+.grp.open .grp-tap{display:none}
+
+/* PUZZLE (clue / riddle with hint + reveal) */
+.act.puzzle .pz-q{background:var(--bg3);border:2px solid rgba(251,239,255,.12);border-radius:14px;padding:14px 16px;color:#EBDDFA;font-size:1.02rem;line-height:1.5;margin-bottom:12px}
+.act.puzzle .pz-q b{color:var(--paper)}
+.pz-btns{display:flex;gap:9px;flex-wrap:wrap}
+.pz-btn{font-family:var(--font-d);font-weight:600;font-size:.9rem;background:var(--bg3);border:2px solid rgba(251,239,255,.18);color:#EBDDFA;padding:8px 15px;border-radius:999px;cursor:pointer}
+.pz-btn.on{background:var(--wc,var(--teal));color:var(--ink);border-color:var(--ink)}
+.pz-hint,.pz-ans{max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .3s ease,margin .3s,padding .3s}
+.pz-hint.show,.pz-ans.show{max-height:320px;opacity:1;margin-top:11px}
+.pz-hint{color:#C9B4DE;font-size:.95rem;line-height:1.5;border-left:3px solid var(--wc,var(--teal));padding-left:12px}
+.pz-ans.show{background:rgba(35,224,196,.12);border:2px dashed var(--wc,var(--teal));border-radius:14px;padding:14px 16px}
+.pz-ans{color:var(--paper);font-size:1rem;line-height:1.5}
+.pz-ans b{color:var(--wc,var(--teal))}
+
+/* LOCK (escape finale) */
+.act.lock .lock-dials{display:flex;gap:10px;justify-content:center;margin:6px 0 16px;flex-wrap:wrap}
+.act.lock .lock-dials.solved .d-val{background:var(--teal);color:var(--ink);border-color:var(--ink)}
+.dial{display:flex;flex-direction:column;align-items:center;gap:6px}
+.dial button{width:52px;height:30px;border-radius:9px;border:2px solid rgba(251,239,255,.2);background:var(--bg3);color:var(--paper);font-size:.9rem;cursor:pointer;line-height:1}
+.dial button:active{transform:scale(.94)}
+.d-val{width:52px;height:60px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:2rem;background:#160A2E;border:2.5px solid var(--pink);border-radius:12px;color:var(--paper)}
+.lock-go{margin-top:2px}
+.lock-msg{max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,opacity .35s ease,margin .35s,padding .35s;text-align:center;font-size:1.06rem;line-height:1.5;border-radius:16px}
+.lock-msg.show{max-height:360px;opacity:1;margin-top:15px;padding:18px 18px}
+.lock-msg.win{background:linear-gradient(135deg,var(--teal),var(--blue));color:var(--ink);border:3px solid var(--ink);font-family:var(--font-d);font-weight:600;box-shadow:5px 5px 0 var(--shadow)}
+.lock-msg.no{background:var(--bg3);border:2px solid var(--pink);color:#FFC7DE}
+
 /* OUTRO */
 .outro{background:linear-gradient(135deg,var(--violet),var(--pink));border:3.5px solid var(--ink);border-radius:26px;padding:36px 26px;text-align:center;box-shadow:8px 8px 0 var(--shadow)}
 .outro h2{color:var(--paper);font-size:clamp(1.4rem,4.5vw,2rem)}
@@ -311,8 +351,8 @@ footer{text-align:center;color:#9C86B6;font-size:.85rem;padding:20px 0 46px}
 <section class="block wrap" style="padding-top:6px"><div id="weeks"></div></section>
 
 <section class="block wrap" style="padding-top:6px">
-  <div class="outro"><h2>Week 11 is a showcase. Performing is 100% optional.</h2>
-    <p>Some people do skits, songs, stories or comedy. Others watch, help, and cheer everyone on. Both are the whole point.</p>
+  <div class="outro"><h2>Every week's a new game. Jumping in is 100% optional.</h2>
+    <p>Some weeks you'll act, tell stories, debate or solve a mystery. Some people dive in; others watch, help, and cheer everyone on. Both are the whole point.</p>
     <span class="mini">💛 "I'm just here to talk and have fun" — that counts. You belong here.</span></div>
   <footer>Conversation Club · show up · say hi · see what happens</footer>
 </section>
@@ -477,9 +517,49 @@ function buildScripts(a){
   });
   return w;
 }
-const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope,scripts:buildScripts};
+function buildGroups(a){
+  const w=$(`<div class="act"><div class="act-h">${a.icon||'👥'} ${a.title||'How to run it — pick your group size'}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}
+    <div class="groups">
+      <button type="button" class="grp"><span class="grp-top"><span class="grp-ic">👥</span><span class="grp-sz">Small group</span><span class="grp-ct">2–5</span></span><span class="grp-tx">${a.small}</span><span class="grp-tap">tap to see how →</span></button>
+      <button type="button" class="grp"><span class="grp-top"><span class="grp-ic">👨‍👩‍👧‍👦</span><span class="grp-sz">Big group</span><span class="grp-ct">12–24</span></span><span class="grp-tx">${a.big}</span><span class="grp-tap">tap to see how →</span></button>
+    </div></div>`);
+  w.querySelectorAll('.grp').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('open')));
+  return w;
+}
+function buildPuzzle(a){
+  const hintBtn=a.hint?`<button type="button" class="pz-btn pz-hint-b">💡 Hint</button>`:'';
+  const hintBox=a.hint?`<div class="pz-hint">${a.hint}</div>`:'';
+  const w=$(`<div class="act puzzle"><div class="act-h">${a.icon||'🧩'} ${a.title}</div>
+    ${a.q?`<div class="pz-q">${a.q}</div>`:''}
+    <div class="pz-btns">${hintBtn}<button type="button" class="pz-btn pz-ans-b">${a.ansLabel||'🔓 Reveal answer'}</button></div>
+    ${hintBox}<div class="pz-ans">${a.answer}</div></div>`);
+  const hb=w.querySelector('.pz-hint-b'),hx=w.querySelector('.pz-hint');
+  if(hb)hb.addEventListener('click',()=>{hx.classList.toggle('show');hb.classList.toggle('on');});
+  const ab=w.querySelector('.pz-ans-b'),ax=w.querySelector('.pz-ans');
+  ab.addEventListener('click',()=>{const on=ax.classList.toggle('show');ab.classList.toggle('on');if(on)burst();});
+  return w;
+}
+function buildLock(a){
+  const digits=a.code.split('');
+  const dials=digits.map(()=>`<div class="dial"><button type="button" class="d-up">▲</button><div class="d-val">0</div><button type="button" class="d-dn">▼</button></div>`).join('');
+  const w=$(`<div class="act lock"><div class="act-h">${a.icon||'🔐'} ${a.title}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}
+    <div class="lock-dials">${dials}</div><button type="button" class="big-btn lock-go">🔓 UNLOCK</button>
+    <div class="lock-msg"></div></div>`);
+  const cur=digits.map(()=>0),vals=[...w.querySelectorAll('.d-val')];
+  w.querySelectorAll('.dial').forEach((d,i)=>{
+    d.querySelector('.d-up').addEventListener('click',()=>{cur[i]=(cur[i]+1)%10;vals[i].textContent=cur[i];});
+    d.querySelector('.d-dn').addEventListener('click',()=>{cur[i]=(cur[i]+9)%10;vals[i].textContent=cur[i];});
+  });
+  const msg=w.querySelector('.lock-msg'),go=w.querySelector('.lock-go'),dialBox=w.querySelector('.lock-dials');
+  go.addEventListener('click',()=>{
+    if(cur.join('')===a.code){msg.innerHTML=a.success;msg.className='lock-msg win show';dialBox.classList.add('solved');burst();setTimeout(burst,380);setTimeout(burst,760);}
+    else{msg.innerHTML=a.fail||'🔒 Not yet… check your digits and try again!';msg.className='lock-msg no show';}
+  });
+  return w;
+}
+const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope,scripts:buildScripts,groups:buildGroups,puzzle:buildPuzzle,lock:buildLock};
 
-/* ---------- THE 10 WEEKS ---------- */
+/* ---------- THE 11 WEEKS ---------- */
 const WEEKS=[
 {n:1,stage:"Connect",emoji:"👋",color:"var(--pink)",title:"Meet the Club",short:"Meet everyone",vibe:"Show up, say hi, meet the room. Zero pressure.",acts:[
   {type:"pick",icon:"👋",title:"A question to get started",sub:"Pick one and ask the person next to you.",options:["If you could teleport anywhere right now, where would you go?","What made you smile this week?","What is your favourite food?"]},
@@ -491,7 +571,7 @@ const WEEKS=[
     {q:"…is a morning person",dot:"var(--teal)"},{q:"…could eat one food forever",dot:"var(--teal)"},{q:"…is watching a good show",dot:"var(--teal)"},
     {q:"…has a hidden talent",dot:"var(--violet)"},{q:"…is obsessed with something",dot:"var(--violet)"},{q:"…wants to try something new",dot:"var(--violet)"},
     {q:"…would survive a zombie apocalypse",dot:"var(--pink)"},{q:"…has a useless talent",dot:"var(--pink)"},{q:"…wants a weird superpower",dot:"var(--pink)"}]},
-  {type:"note",icon:"💡",title:"Then…",text:"Share the most interesting thing you found out about someone. And a heads-up: Week 11 is a showcase, and performing is always optional."}]},
+  {type:"note",icon:"💡",title:"Then…",text:"Share the most interesting thing you found out about someone. And a heads-up: every week is a brand-new activity — from storytelling to word games to a big escape-room finale. Drop in whenever; nothing is ever compulsory."}]},
 
 {n:2,stage:"Explore",emoji:"🌟",color:"var(--violet)",title:"Find Your Thing",short:"Find your vibe",vibe:"Talk to lots of new people, then explore the five creative vibes. No teams, no commitments.",acts:[
   {type:"pick",icon:"🌟",title:"Pick your warm-up",sub:"Choose a question and answer it out loud when it's your turn.",options:["What's something you wish you were really good at?","If you could instantly master one skill, what would it be?","What's a talent you'd love to steal from someone?"]},
@@ -547,24 +627,51 @@ const WEEKS=[
     {label:"A line of dialogue",values:["“You weren't supposed to see that.”","“We need to leave. Now.”","“I can explain everything.”","“That's not what it looks like.”","“Trust me, I've done this before.”","“Whatever you do, don't open it.”"]}]},
   {type:"note",icon:"⏱️",title:"Then: 25 minutes, make ~2 minutes",text:"A skit, a story, a fake news report, an art piece, a song, a game show — totally your call. Rough edges are welcome."}]},
 
-{n:8,stage:"Build",emoji:"🛠️",color:"var(--pink)",title:"Build It!",short:"Start your idea",vibe:"Start building something that's actually yours.",acts:[
-  {type:"checklist",icon:"☕",title:"Idea Café — tap what you're drawn to",unit:"picked",items:["📖 Story / spoken word","🎭 Skit / acting","🎤 Music / performance","😂 Comedy","🌍 Cultural performance","🎙️ Hosting / MC","🎨 Art / visual piece","🤯 Something totally different"]},
-  {type:"note",icon:"🧩",title:"Find your people",text:"Go solo, pair up, join a group, help someone else's piece, or don't perform at all. Then build a rough 2–5 minute piece — most of the hour is just making and trying things."}]},
+{n:8,stage:"Play",emoji:"🎲",color:"var(--blue)",title:"Game On!",short:"Bluff & guess",vibe:"Bluff, guess and describe your way through an hour of word games. Everyone plays — no winners, just laughs.",acts:[
+  {type:"pick",icon:"🎲",title:"Warm-up — pick one",sub:"Chat with the person next to you.",options:["Are you competitive, or more 'just here to have fun'?","What's a game you ALWAYS win?","What's a game you ALWAYS lose?"]},
+  {type:"note",icon:"🎭",title:"Game 1 · Two Truths and a Lie",text:"Say THREE things about yourself — two are TRUE, one is a LIE. The others ask questions, then guess the lie! Keep it simple: a food, a place, a skill, your family. Easy frame: “One of these is a lie. Number one… number two… number three…”"},
+  {type:"reveal",icon:"💡",title:"Need an idea? Tap for a topic",sub:"Make your three statements about…",btn:"🎲 Give me a topic",lead:"Tap for a starting topic 👇",pool:["a food you've eaten","a place you've been","a skill you have","your family","an animal you've touched","a job you've done","somewhere you've lived","a sport you've tried"]},
+  {type:"note",icon:"🤫",title:"Game 2 · Say It Without Saying It",text:"Tap below for a mystery word and describe it so your group guesses — but you can NEVER say the word itself, or any of the forbidden words! Use your hands, examples, and “it's a thing that…”. Whoever guesses picks the next word."},
+  {type:"reveal",icon:"🔊",title:"Mystery word — tap to reveal",sub:"Only the describer peeks! 🙈",btn:"🎲 New mystery word",lead:"Tap for a word to describe 👇",confetti:true,pool:["🍕 PIZZA — don't say: round, cheese, Italian","☂️ UMBRELLA — don't say: rain, wet, open","✈️ AIRPORT — don't say: plane, fly, travel","🐱 CAT — don't say: pet, meow, dog","☕ COFFEE — don't say: drink, morning, hot","📱 PHONE — don't say: call, text, screen","🎂 BIRTHDAY — don't say: cake, candles, party","🚌 BUS — don't say: stop, ride, wheels","😴 DREAM — don't say: sleep, night, bed","⏰ TIME — don't say: clock, hour, late"]},
+  {type:"groups",icon:"👥",title:"How to play — pick your group size",small:"Everyone plays together, facilitators included. Take individual turns and guess as one group — no teams needed.",big:"Make teams of 3–4 and play the same round at the same time. Rotate who gives the clues so everyone gets to speak."},
+  {type:"note",icon:"🏆",title:"Final Challenge · Lightning Round",text:"Last 10 minutes: fast mystery words, one forbidden word each. Describe in short phrases OR full sentences — both totally count. Start easy, then get trickier… and you can always say “pass.”"}]},
 
-{n:9,stage:"Rehearse",emoji:"🎬",color:"var(--violet)",title:"Make It Better",short:"Make it better",vibe:"Make your piece even better with friendly feedback. Not a rehearsal class.",acts:[
-  {type:"guide",icon:"💬",title:"How to give good feedback",intro:"Good feedback is <b>kind, specific, and helpful</b>. Don't just say “it was good.” Say what you liked and <b>why</b> — then offer one friendly idea. Try these sentence starters:",
-    frames:[{e:"❤️",f:"“I loved ___ because ___.”"},{e:"😂",f:"“The part that really worked was ___.”"},{e:"💡",f:"“What if you tried ___?”"}],
-    bad:"“It was good.” (This doesn't help — it's too general.)",
-    good:"“I loved the ending because it surprised me. What if you said the last line a bit louder?”"},
-  {type:"note",icon:"🔁",title:"Then: swap & revise",text:"Perform for another group, trade feedback, take the good ideas, leave the rest, and try again."}]},
+{n:9,stage:"Debate",emoji:"⚖️",color:"var(--tangerine)",title:"Pick a Side!",short:"Choose & defend",vibe:"Choose a side, say why, and try to change someone's mind — about the most ridiculous questions we could find.",acts:[
+  {type:"pick",icon:"⚖️",title:"Warm-up — pick one",sub:"Choose a side and tell a partner why.",options:["Would you rather fly, or be invisible?","Would you rather never sleep, or never eat?","Would you rather know the future, or change the past?"]},
+  {type:"note",icon:"👉",title:"How it works",text:"Tap below to reveal a “Would You Rather”. Pick a side — A or B. Then say WHY. Then the fun part: try to make someone switch to your side! The questions get more and more ridiculous…"},
+  {type:"guide",icon:"💬",title:"Say it like this — sentence helpers",intro:"You don't need fancy English to win a debate — you need a <b>reason</b>. Pick a side, then borrow one of these:",
+    frames:[{e:"✅",f:"“I choose ___ because ___.”"},{e:"🤔",f:"“Have you thought about ___?”"},{e:"🔁",f:"“Good point, but what about ___?”"}],
+    bad:"“I just like it.” (No reason — nobody's going to switch!)",
+    good:"“I choose flying, because I'd never pay for a bus again. Being invisible would just get lonely.”"},
+  {type:"reveal",icon:"🔥",title:"Would You Rather — tap to reveal",sub:"Pick a side, say why, then persuade!",btn:"🔥 Next one",lead:"Tap for your first choice 👇",confetti:true,pool:["🍔 Unlimited free food, or ✈️ unlimited free travel?","⏰ Always 10 minutes late, or 😴 always 30 minutes early?","🥣 Is cereal a soup? Pick a side!","⭐ Famous, or 💰 rich but totally anonymous?","🍍 Pineapple on pizza: crime, or genius?","🌭 Is a hotdog a sandwich?","🐴 Fight 100 duck-sized horses, or 1 horse-sized duck?","🗣️ Always say what you think, or 🤐 never speak again?","🧦 A tiny rock in your shoe forever, or one wet sock forever?","⏪ Rewind 10 seconds any time, or ⏸️ pause time for 10 minutes?"]},
+  {type:"groups",icon:"👥",title:"How to debate — pick your group size",small:"Sit around a table and argue each one out. Facilitators can take opposite sides on purpose to make it spicier.",big:"Agree = move to one side of the room, disagree = the other side. Talk to a neighbour first, then share arguments across the room."},
+  {type:"note",icon:"🏁",title:"Final Showdown",text:"Last 10 minutes: the most ridiculous question of the day, one side of the room vs the other. Beginners — “I choose A because ___” is a full, perfect answer. Shy? Plan your reason with a partner first, then share. You can always say “pass.”"}]},
 
-{n:10,stage:"Rehearse",emoji:"🌟",color:"var(--teal)",title:"Ready the Show",short:"Get ready",vibe:"Make the showcase feel easy. Let's build the run of show.",acts:[
-  {type:"pick",icon:"🌟",title:"Warm-up",sub:"Pick one to talk about.",options:["What are you excited or nervous about for next week?","What would make the showcase fun for you?"]},
-  {type:"checklist",icon:"📋",title:"Build the show together — decide as a group",unit:"decided",items:["🎤 Who's the MC?","🔢 What order feels good?","🎵 Who needs music / props / help?","🚀 How do we open?","🎬 How do we end?"]}]},
+{n:10,stage:"Mystery",emoji:"🕵️",color:"var(--violet)",title:"The Mystery Club",short:"Solve the case",vibe:"Someone stole the Conversation Club snacks! Four suspects. Your job: ask questions, compare their stories, and crack the case.",acts:[
+  {type:"pick",icon:"🕵️",title:"Warm-up — pick one",sub:"Chat with a partner.",options:["Are you good at keeping secrets?","Would you make a good detective? Why?","What's the best excuse you've ever used?"]},
+  {type:"note",icon:"🍕",title:"The Case of the Missing Snacks",text:"Today's snacks have VANISHED. 😱 Last seen next to a suspiciously empty pizza box. Four volunteers play the suspects (reading from the printed Suspect Scripts); everyone else is a detective. Meet the suspects, ask your questions, follow the clues, and decide: whodunnit?"},
+  {type:"flip",icon:"👤",title:"The 4 suspects — tap to flip",cards:[
+    {cls:"lane-story",ic:"🧁",name:"Bailey the Baker",desc:"Says: “I was just checking the fridge!” · Motive: on a diet and “definitely not hungry.”"},
+    {cls:"lane-actor",ic:"🏃",name:"Coach Dash",desc:"Says: “I was outside running the whole time!” · Motive: needed energy for the big game."},
+    {cls:"lane-perform",ic:"🎩",name:"Prof. Nibbles",desc:"Says: “I was reading in the library. Alone.” · Motive: says snacks “help him think.”"},
+    {cls:"lane-create",ic:"🐱",name:"Mr. Whiskers",desc:"Says: “Meow.” · Motive: the club cat is ALWAYS near the food…"}]},
+  {type:"note",icon:"🗣️",title:"Ask every suspect these 5 questions",text:"The suspects read their answers from the scripts; your job is to ask, listen, and compare. Dig deeper with “Really? Are you sure?” or “Why are you so nervous?”",tags:["1. Where were you when the snacks disappeared?","2. What did you eat today?","3. Can anyone prove where you were?","4. What is on your hands?","5. What is in your bag?"]},
+  {type:"puzzle",icon:"🔍",title:"Clue 1",q:"🧀 Cheesy orange fingerprints were found all over the snack cupboard.",answer:"So the thief ate something <b>cheesy</b>. Who's been near cheese? 👀",ansLabel:"🔎 What does this mean?"},
+  {type:"puzzle",icon:"🔍",title:"Clue 2",q:"🏃 Three people saw Coach Dash running laps outside the WHOLE time.",answer:"<b>Coach Dash has an alibi</b> — he couldn't have done it. One suspect cleared!",ansLabel:"🔎 What does this mean?"},
+  {type:"puzzle",icon:"🔍",title:"Clue 3",q:"🐱 Mr. Whiskers the cat has no thumbs — and the cupboard has a round handle.",answer:"<b>A cat can't open that cupboard.</b> Mr. Whiskers is innocent (this time). Two suspects left!",ansLabel:"🔎 What does this mean?"},
+  {type:"note",icon:"⚖️",title:"Make your accusation!",text:"Two suspects remain: Bailey and Prof. Nibbles. As a group, point at your suspect and say: “We think ___ did it, because ___.” Ready? Reveal the truth below…"},
+  {type:"puzzle",icon:"🎉",title:"The Reveal",q:"Who stole the Conversation Club snacks?",answer:"It was <b>🧁 Bailey the Baker!</b> The empty pizza box was in Bailey's bag — and those cheesy fingerprints matched. Prof. Nibbles only LIED about the library because he was secretly napping… not a crime, just embarrassing! 😴 Case closed, detectives. 🕵️",ansLabel:"🔓 Reveal the culprit"},
+  {type:"groups",icon:"👥",title:"How to investigate — pick your group size",small:"Run one shared case. A facilitator reveals the clues and plays the suspects while everyone questions them and solves it together.",big:"Split into detective teams of 3–4. Same case, clues released one round at a time. Each team makes its own final accusation, then everyone compares."}]},
 
-{n:11,stage:"Share",emoji:"🎉",color:"var(--tangerine)",title:"The Showcase",short:"The show!",vibe:"It's an event, not an exam. Showtime — or best audience ever.",acts:[
-  {type:"note",icon:"🎉",title:"The Show — a mix of everything",text:"Skits, stories, music, comedy, readings, group pieces — whatever the club made. Not performing? You're the audience, the helpers, and the people cheering everyone on."},
-  {type:"reveal",icon:"🏁",title:"Finale — go around the room",btn:"🎉 Ask the room",lead:"Tap to celebrate 👇",confetti:true,pool:["What was your favourite Conversation Club memory?","What surprised you this term?","What performance did you love?","Did you do something you didn't think you'd do?","What's one thing you'll miss?"]}]},
+{n:11,stage:"Finale",emoji:"🔐",color:"var(--pink)",title:"The Great Escape!",short:"Escape room!",vibe:"You're locked in the Conversation Club! Solve four puzzles, find the secret code, and talk your way out — together. (Don't worry, nobody's really locked in.)",acts:[
+  {type:"note",icon:"🚨",title:"URGENT: Lockdown!",text:"“Conversation Club has been locked down. You have 60 minutes to escape. Solve all four challenges to find the final code. Good luck.” Work together — talking is the only way out!",tags:["1️⃣ The Missing Word","2️⃣ The Secret Message","3️⃣ The Witnesses","4️⃣ The Final Lock"]},
+  {type:"puzzle",icon:"1️⃣",title:"Puzzle 1 · The Missing Word",q:"I am a number. I am how many days are in one week. <b>What number am I?</b>",hint:"Monday, Tuesday, Wednesday… keep counting! 📅",answer:"A week has <b>7 days</b>. ➡️ Your first digit is <b>7</b>.",ansLabel:"🔓 Reveal digit 1"},
+  {type:"puzzle",icon:"2️⃣",title:"Puzzle 2 · The Secret Message",q:"Unscramble this word — it's a number: <b>E · R · H · T · E</b>",hint:"It comes after 2 and before 4… 🔢",answer:"The word is <b>THREE</b>. ➡️ Your second digit is <b>3</b>.",ansLabel:"🔓 Reveal digit 2"},
+  {type:"puzzle",icon:"3️⃣",title:"Puzzle 3 · The Witnesses",q:"Two witnesses saw the escape! 👁️ Witness A: “a RED door and 4 keys.” 👁️ Witness B: “a BLUE door and 4 keys.” <b>What do they AGREE on?</b>",hint:"Ignore what's different (the colour). Find the number they BOTH say.",answer:"They disagree on the door colour — but both say <b>4 keys</b>. ➡️ Your third digit is <b>4</b>.",ansLabel:"🔓 Reveal digit 3"},
+  {type:"puzzle",icon:"4️⃣",title:"Puzzle 4 · The Final Lock",q:"Add your first three digits together: <b>7 + 3 + 4 = ?</b> Then take the LAST digit of your total.",hint:"7 + 3 + 4 = 14. What's the last digit of 14?",answer:"7 + 3 + 4 = 14, and the last digit is <b>4</b>. ➡️ Your fourth digit is <b>4</b>. The full code is <b>7 · 3 · 4 · 4</b>!",ansLabel:"🔓 Reveal digit 4"},
+  {type:"lock",icon:"🔐",title:"The Final Lock",sub:"Set the dials to your 4-digit code, then hit UNLOCK. (Solved the puzzles? You've got this!)",code:"7344",success:"🎉 CONGRATULATIONS! 🎉<br>You've escaped the Conversation Club.<br>Unfortunately… your English is coming with you. 😄",fail:"🔒 Not yet! Double-check your four digits and try again."},
+  {type:"groups",icon:"👥",title:"How to run it — pick your group size",small:"One cooperative mission. Everyone solves the puzzles together, with facilitators as game hosts and teammates.",big:"Several teams of 3–4, all with the same clues. Race if you like — but every team gets to finish and escape."},
+  {type:"note",icon:"💛",title:"The Celebration",text:"You made it! Take an optional group photo 📸, give yourselves a round of applause, and say your goodbyes. Thank you for every conversation this term — you showed up, said hi, and saw what happened. 🎉"}]},
 ];
 
 /* short summaries shown when a plan card is tapped */
@@ -576,10 +683,10 @@ const SUMMARIES={
  5:"A spooky-story game. In groups, start from a creepy found message and build one scary story together — then survive the interruptions your teacher throws in.",
  6:"You don't need a talent — perform with your voice, face and delivery. Say the same words in wild emotions, then remix an everyday topic into a tiny group show.",
  7:"Make something together in 25 minutes from three random ingredients — a skit, a story, an art piece, anything you like.",
- 8:"Pick a format you're drawn to and start building a short piece that's actually yours — solo, in a pair, or in a group.",
- 9:"Share your piece, swap kind and specific feedback, then take the best ideas and make it better.",
- 10:"A relaxed run-through. Polish your piece and decide together how the whole showcase will flow.",
- 11:"Showtime — a mix of everything the club made. Perform, or be the audience and hype crew. Then celebrate together.",
+ 8:"A full hour of word games — Two Truths and a Lie, then describe mystery words without saying them (mind the forbidden words!). Everyone plays; no winners, just laughs.",
+ 9:"Reveal a ridiculous “Would You Rather,” pick a side, say why, and try to make someone switch. Sentence helpers included — a reason is all you need.",
+ 10:"A funny whodunnit: someone stole the snacks. Question four suspects, follow the clues round by round, and make your accusation before the big reveal.",
+ 11:"The finale! You're “locked in” — crack four quick puzzles to find the secret code, open the lock together, and escape. Then celebrate the term.",
 };
 const weeksBox=document.getElementById('weeks'),navInner=document.getElementById('wknav-inner'),planGrid=document.getElementById('plan-grid'),planDetail=document.getElementById('plan-detail');
 function showPlan(w,card){
