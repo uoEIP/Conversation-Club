@@ -308,6 +308,23 @@ a{color:inherit}
 .lock-msg.win{background:linear-gradient(135deg,var(--teal),var(--blue));color:var(--ink);border:3px solid var(--ink);font-family:var(--font-d);font-weight:600;box-shadow:5px 5px 0 var(--shadow)}
 .lock-msg.no{background:var(--bg3);border:2px solid var(--pink);color:#FFC7DE}
 
+/* SECRET PICTURE */
+.spgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:12px;margin-top:4px}
+.spcard{display:flex;flex-direction:column;align-items:center;gap:4px;background:linear-gradient(150deg,var(--bg3),var(--bg2));border:2.5px solid var(--ink);border-radius:18px;padding:17px 10px;cursor:pointer;color:var(--paper);font:inherit;box-shadow:4px 4px 0 var(--shadow);transition:transform .12s,box-shadow .12s}
+.spcard:hover{transform:translateY(-3px)}
+.spcard:active{transform:translateY(0);box-shadow:2px 2px 0 var(--shadow)}
+.sp-ic{font-size:2rem;line-height:1}
+.sp-n{font-family:var(--font-d);font-weight:600;font-size:1rem}
+.sp-hint{font-size:.72rem;color:#C9B4DE;opacity:.85}
+.spmodal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(10,4,25,.88);padding:20px}
+.spmodal.open{display:flex}
+.spmodal-card{background:var(--paper);border:4px solid var(--ink);border-radius:24px;box-shadow:10px 10px 0 var(--shadow);max-width:380px;width:100%;padding:20px}
+.spmodal-tag{font-family:var(--font-d);font-weight:600;color:var(--pink);font-size:1.02rem;text-align:center}
+.spmodal-sub{color:#5A4A70;font-size:.88rem;text-align:center;margin:4px 0 13px;line-height:1.4}
+.spmodal-pic{background:#fff;border:2px solid #E3D8EF;border-radius:16px;padding:12px}
+.spmodal-pic svg{width:100%;height:auto;max-height:44vh;display:block}
+.spmodal-hide{margin-top:15px;width:100%;font-family:var(--font-d);font-weight:600;font-size:1rem;background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:12px;cursor:pointer}
+
 /* OUTRO */
 .outro{background:linear-gradient(135deg,var(--violet),var(--pink));border:3.5px solid var(--ink);border-radius:26px;padding:36px 26px;text-align:center;box-shadow:8px 8px 0 var(--shadow)}
 .outro h2{color:var(--paper);font-size:clamp(1.4rem,4.5vw,2rem)}
@@ -356,6 +373,13 @@ footer{text-align:center;color:#9C86B6;font-size:.85rem;padding:20px 0 46px}
     <span class="mini">💛 "I'm just here to talk and have fun" — that counts. You belong here.</span></div>
   <footer>Conversation Club · show up · say hi · see what happens</footer>
 </section>
+
+<div class="spmodal" id="spmodal" aria-hidden="true"><div class="spmodal-card">
+  <div class="spmodal-tag">🤫 You're the Describer!</div>
+  <div class="spmodal-sub">Describe the shapes so your group can draw it — but don't say what it is, and don't show your screen!</div>
+  <div class="spmodal-pic" id="spmodal-pic"></div>
+  <button class="spmodal-hide" id="spmodal-hide" type="button">Got it — hide 🙈</button>
+</div></div>
 
 <div class="confetti" id="confetti" aria-hidden="true"></div>
 
@@ -557,7 +581,26 @@ function buildLock(a){
   });
   return w;
 }
-const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope,scripts:buildScripts,groups:buildGroups,puzzle:buildPuzzle,lock:buildLock};
+const SP_W='fill="none" stroke="#160A2E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"';
+const SECRET_PICS={
+ house:`<svg viewBox="0 0 200 200" ${SP_W}><rect x="55" y="95" width="90" height="75"/><path d="M45 95 L100 50 L155 95"/><rect x="88" y="128" width="24" height="42"/><rect x="66" y="110" width="20" height="20"/></svg>`,
+ robot:`<svg viewBox="0 0 200 200" ${SP_W}><rect x="72" y="42" width="56" height="46" rx="6"/><line x1="100" y1="42" x2="100" y2="26"/><circle cx="100" cy="22" r="5"/><circle cx="88" cy="63" r="4"/><circle cx="112" cy="63" r="4"/><line x1="86" y1="78" x2="114" y2="78"/><rect x="68" y="94" width="64" height="52" rx="4"/><line x1="68" y1="108" x2="50" y2="122"/><line x1="132" y1="108" x2="150" y2="122"/><line x1="84" y1="146" x2="84" y2="172"/><line x1="116" y1="146" x2="116" y2="172"/></svg>`,
+ flower:`<svg viewBox="0 0 200 200" ${SP_W}><circle cx="100" cy="42" r="15"/><circle cx="130" cy="63" r="15"/><circle cx="118" cy="97" r="15"/><circle cx="82" cy="97" r="15"/><circle cx="70" cy="63" r="15"/><circle cx="100" cy="72" r="13"/><line x1="100" y1="95" x2="100" y2="170"/><path d="M100 140 Q124 130 128 152"/></svg>`,
+ sailboat:`<svg viewBox="0 0 200 200" ${SP_W}><path d="M58 150 L142 150 L128 172 L72 172 Z"/><line x1="100" y1="150" x2="100" y2="48"/><path d="M100 54 L100 144 L150 144 Z"/><path d="M34 180 Q46 174 58 180 T82 180 T106 180 T130 180 T154 180 T178 180"/></svg>`,
+ cat:`<svg viewBox="0 0 200 200" ${SP_W}><circle cx="100" cy="98" r="42"/><path d="M66 70 L60 30 L94 56"/><path d="M134 70 L140 30 L106 56"/><circle cx="85" cy="94" r="4"/><circle cx="115" cy="94" r="4"/><path d="M96 106 L100 111 L104 106"/><line x1="60" y1="102" x2="30" y2="98"/><line x1="60" y1="110" x2="32" y2="118"/><line x1="140" y1="102" x2="170" y2="98"/><line x1="140" y1="110" x2="168" y2="118"/></svg>`,
+ mug:`<svg viewBox="0 0 200 200" ${SP_W}><path d="M60 84 L132 84 L126 158 Q125 166 117 166 L75 166 Q67 166 66 158 Z"/><path d="M132 100 Q164 100 164 126 Q164 148 132 146"/><path d="M84 70 Q79 60 87 50"/><path d="M106 70 Q101 60 109 50"/></svg>`,
+ catbox:`<svg viewBox="0 0 200 200" ${SP_W}><rect x="48" y="108" width="104" height="62"/><path d="M48 108 L70 90 L152 90 L152 108"/><circle cx="100" cy="82" r="25"/><path d="M82 66 L78 44 L96 60"/><path d="M118 66 L122 44 L104 60"/><circle cx="92" cy="80" r="3"/><circle cx="108" cy="80" r="3"/><path d="M70 108 Q78 98 86 106"/><path d="M114 108 Q122 98 130 106"/></svg>`,
+ housetree:`<svg viewBox="0 0 200 200" ${SP_W}><line x1="22" y1="166" x2="182" y2="166"/><rect x="36" y="108" width="62" height="58"/><path d="M28 108 L67 74 L106 108"/><rect x="58" y="136" width="20" height="30"/><rect x="144" y="120" width="12" height="46"/><circle cx="150" cy="104" r="26"/></svg>`
+};
+function openSecret(id){const p=document.getElementById('spmodal-pic');if(p){p.innerHTML=SECRET_PICS[id]||'';document.getElementById('spmodal').classList.add('open');}}
+(function(){const m=document.getElementById('spmodal');if(!m)return;document.getElementById('spmodal-hide').addEventListener('click',()=>m.classList.remove('open'));m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});})();
+function buildSecret(a){
+  const cards=(a.cards||[]).map(c=>`<button type="button" class="spcard" data-pic="${c.id}"><span class="sp-ic">🎴</span><span class="sp-n">${c.label}</span><span class="sp-hint">tap — only you see it</span></button>`).join('');
+  const w=$(`<div class="act"><div class="act-h">${a.icon||'🤫'} ${a.title}</div>${a.sub?`<div class="act-sub">${a.sub}</div>`:''}<div class="spgrid">${cards}</div></div>`);
+  w.querySelectorAll('.spcard').forEach(b=>b.addEventListener('click',()=>openSecret(b.dataset.pic)));
+  return w;
+}
+const BUILD={pick:buildPick,rounds:buildRounds,bingo:buildBingo,wheel:buildWheel,slot:buildSlot,reveal:buildReveal,checklist:buildChecklist,flip:buildFlip,guide:buildGuide,note:buildNote,envelope:buildEnvelope,scripts:buildScripts,groups:buildGroups,puzzle:buildPuzzle,lock:buildLock,secret:buildSecret};
 
 /* ---------- THE 11 WEEKS ---------- */
 const WEEKS=[
@@ -630,14 +673,13 @@ const WEEKS=[
   {type:"note",icon:"4️⃣",title:"Name it & price it (5 min)",text:"Every great invention needs a NAME and a PRICE. Make a little product label if you want! Example: THE LAZY 3000™ — only $19.99. Then get ready to show it off at the invention fair.",tags:["Give it a name","Add a price","Make a label (optional)"]},
   {type:"groups",icon:"👥",title:"How to run it — pick your group size",small:"Everyone makes their own invention — facilitators too! Sit around one table, share materials, chat, and compare as you go. The invention fair becomes a casual show-and-tell right at the table.",big:"Work in pairs or threes — each group builds ONE invention together. At the end, half the room stays with their inventions while the others walk around and visit… then switch!"}]},
 
-{n:8,stage:"Play",emoji:"🎲",color:"var(--blue)",title:"Game On!",short:"Bluff & guess",vibe:"Bluff, guess and describe your way through an hour of word games. Everyone plays — no winners, just laughs.",acts:[
+{n:8,stage:"Play",emoji:"🎲",color:"var(--blue)",title:"Game On!",short:"Describe & draw",vibe:"Describe it, draw it, see what happens! Give clear instructions and ask good questions to recreate pictures you can't see. No drawing skill needed — funny results guaranteed.",acts:[
   {type:"pick",icon:"🎲",title:"Warm-up — pick one",sub:"Chat with the person next to you.",options:["Are you competitive, or more 'just here to have fun'?","What's a game you ALWAYS win?","What's a game you ALWAYS lose?"]},
-  {type:"note",icon:"🎭",title:"Game 1 · Two Truths and a Lie",text:"Say THREE things about yourself — two are TRUE, one is a LIE. The others ask questions, then guess the lie! Keep it simple: a food, a place, a skill, your family. Easy frame: “One of these is a lie. Number one… number two… number three…”"},
-  {type:"reveal",icon:"💡",title:"Need an idea? Tap for a topic",sub:"Make your three statements about…",btn:"🎲 Give me a topic",lead:"Tap for a starting topic 👇",pool:["a food you've eaten","a place you've been","a skill you have","your family","an animal you've touched","a job you've done","somewhere you've lived","a sport you've tried"]},
-  {type:"note",icon:"🤫",title:"Game 2 · Say It Without Saying It",text:"Tap below for a mystery word and describe it so your group guesses — but you can NEVER say the word itself, or any of the forbidden words! Use your hands, examples, and “it's a thing that…”. Whoever guesses picks the next word."},
-  {type:"reveal",icon:"🔊",title:"Mystery word — tap to reveal",sub:"Only the describer peeks! 🙈",btn:"🎲 New mystery word",lead:"Tap for a word to describe 👇",confetti:true,pool:["🍕 PIZZA — don't say: round, cheese, Italian","☂️ UMBRELLA — don't say: rain, wet, open","✈️ AIRPORT — don't say: plane, fly, travel","🐱 CAT — don't say: pet, meow, dog","☕ COFFEE — don't say: drink, morning, hot","📱 PHONE — don't say: call, text, screen","🎂 BIRTHDAY — don't say: cake, candles, party","🚌 BUS — don't say: stop, ride, wheels","😴 DREAM — don't say: sleep, night, bed","⏰ TIME — don't say: clock, hour, late"]},
-  {type:"groups",icon:"👥",title:"How to play — pick your group size",small:"Everyone plays together, facilitators included. Take individual turns and guess as one group — no teams needed.",big:"Make teams of 3–4 and play the same round at the same time. Rotate who gives the clues so everyone gets to speak."},
-  {type:"note",icon:"🏆",title:"Final Challenge · Lightning Round",text:"Last 10 minutes: fast mystery words, one forbidden word each. Describe in short phrases OR full sentences — both totally count. Start easy, then get trickier… and you can always say “pass.”"}]},
+  {type:"note",icon:"🎧",title:"Round 1 · Draw What I Say!",text:"Grab paper and a pencil. Your host reads out secret instructions, one at a time — just listen and draw! You can ask questions… but no peeking at anyone else's paper. 👀"},
+  {type:"note",icon:"🤫",title:"The Secret Picture Challenge",text:"One person taps a secret picture (only you see it!) and describes it step by step — but can't say what it is, show the screen, or draw shapes in the air. Everyone else draws. Ask lots of questions, then reveal and compare! New describer each round."},
+  {type:"secret",icon:"🎴",title:"Secret pictures — Describer, tap yours!",sub:"Only you see it. Describe the shapes, not the name!",cards:[{id:"house",label:"Picture 1"},{id:"robot",label:"Picture 2"},{id:"flower",label:"Picture 3"},{id:"sailboat",label:"Picture 4"},{id:"cat",label:"Picture 5"},{id:"mug",label:"Picture 6"}]},
+  {type:"note",icon:"🏆",title:"Final round · The Tricky Picture",text:"Last round, the pictures get sneakier — same rules, a few more shapes to describe. Vote for the funniest drawing. 😹"},
+  {type:"secret",icon:"🧩",title:"Tricky pictures — final round",sub:"A bit harder! Only the Describer taps.",cards:[{id:"catbox",label:"Tricky 1"},{id:"housetree",label:"Tricky 2"}]}]},
 
 {n:9,stage:"Debate",emoji:"⚖️",color:"var(--tangerine)",title:"Pick a Side!",short:"Choose & defend",vibe:"Choose a side, say why, and try to change someone's mind — about the most ridiculous questions we could find.",acts:[
   {type:"pick",icon:"⚖️",title:"Warm-up — pick one",sub:"Choose a side and tell a partner why.",options:["Would you rather fly, or be invisible?","Would you rather never sleep, or never eat?","Would you rather know the future, or change the past?"]},
@@ -686,7 +728,7 @@ const SUMMARIES={
  5:"A spooky-story game. In groups, start from a creepy found message and build one scary story together — then survive the interruptions your teacher throws in.",
  6:"You don't need a talent — perform with your voice, face and delivery. Say the same words in wild emotions, then remix an everyday topic into a tiny group show.",
  7:"Become an inventor: pick a ridiculous problem, sketch a solution, then actually BUILD it from craft materials. Name it, price it, and show it off at the invention fair.",
- 8:"A full hour of word games — Two Truths and a Lie, then describe mystery words without saying them (mind the forbidden words!). Everyone plays; no winners, just laughs.",
+ 8:"Describe and draw! A describer sees a secret picture (only on their screen) and explains it step by step while everyone draws — then reveal and compare the funny results. No drawing skill needed.",
  9:"Reveal a ridiculous “Would You Rather,” pick a side, say why, and try to make someone switch. Sentence helpers included — a reason is all you need.",
  10:"A funny whodunnit: someone stole the snacks. Question four suspects, follow the clues round by round, and make your accusation before the big reveal.",
  11:"The finale! You're “locked in” — crack four quick puzzles to find the secret code, open the lock together, and escape. Then celebrate the term.",
